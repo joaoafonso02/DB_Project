@@ -1,35 +1,98 @@
-DROP TABLE IF EXISTS `TrotiNet`;
+/* DROP TABLE IF EXISTS `TrotiNet`; */
 
-CREATE TABLE User (
-  `id` mediumint(8) unsigned NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `phone` varchar(100) default NULL,
-  `email` varchar(255) default NULL,
-  `postalZip` varchar(10) default NULL,
-  `region` varchar(50) default NULL,
-  `country` varchar(100) default NULL,
-  PRIMARY KEY (`id`)
-) AUTO_INCREMENT=1;
+use p1g7;
+go
 
-CREATE TABLE Inventory (
-  id INT PRIMARY KEY,
-  Name VARCHAR(255),
-  Description TEXT,
-  Inventory INT,
-  Cost DECIMAL(10, 2)
+/* drop table Troti_Users; */
+CREATE TABLE [Troti_Users] (
+  [id] INTEGER NOT NULL IDENTITY(1, 1),
+  [name] VARCHAR(255) NOT NULL,
+  [phone] VARCHAR(15) NOT NULL,
+  [email] VARCHAR(255) NOT NULL,
+	[postalZip] VARCHAR(10) NOT NULL,
+  [region] VARCHAR(50) NOT NULL,
+  [country] VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
 );
+GO
 
-CREATE TABLE Orders (
-  orderId INT PRIMARY KEY,
-  Price DOUBLE,
-  quantity INT,
-  date DATE,
-  orderName TEXT,
-  userId INT,
-  FOREIGN KEY (userId) REFERENCES User(userId)
+/* drop table Troti_Inventory; */
+create table Troti_Inventory (
+	id integer not null IDENTITY(1, 1),
+	iname varchar(255) not null,
+	idescription varchar(255) not null,
+	stock integer not null,
+	cost real not null,
+	primary key(id)
 );
+GO
 
-CREATE TABLE Supplier (
+
+create table Troti_Supplier (
+	nif int not null,
+	sname varchar(255) not null,
+	phone varchar(20) not null,
+	email varchar(255) not null,
+	saddress varchar(255) not null,
+	postalZip varchar(10) not null,
+	country varchar(255) not null,
+	primary key (nif)
+);
+GO
+
+create table Troti_Orders (
+	id integer not null identity(1,1),
+	oname varchar(255) not null,
+	price real not null,
+	quantity int not null,
+	odate date not null,
+	users_id int not null,
+	primary key (id),
+	foreign key (users_id) references Troti_Users(id)
+);
+GO
+
+create table Troti_Insurance(
+	id integer not null identity(1,1),
+  idescription varchar(255) not null,
+  idate date not null,
+  iprice real not null,
+  productId integer,
+  FOREIGN KEY (productId) REFERENCES product(productId),
+  PRIMARY KEY(id)
+);
+GO
+
+create table Troti_Product (
+	id int not null identity(1,1),
+	pname varchar(255) not null,
+	price real not null,
+	insurance_id int not null,
+	orders_id int not null,
+	supplier_nif int not null,
+	payment_id int not null,
+	foreign key(supplier_nif) references Troti_Supplier(nif),
+	foreign key(order_id) references Troti_Orders(id),
+	foreign key(insurance_id) references Troti_Insurance(id),
+	foreign key(payment_id) references Troti_Payment(id),
+	primary key(id)
+);
+GO
+
+create table Troti_Payment (
+  id int not null identity(1,1),
+  pdescription varchar(255) not null,
+  subtotal real not null,
+  pdate date not null,
+  productId integer not null,
+  FOREIGN KEY (productId) REFERENCES product(productId)
+  PRIMARY KEY(id)
+);
+GO
+
+/*
+
+CREATE TABLE if not exists Supplier (
   SupplierNIF INT PRIMARY KEY,
   SuppplierName VARCHAR(255),
   SupplierPhone VARCHAR(20),
@@ -39,7 +102,7 @@ CREATE TABLE Supplier (
   SupplierCountry VARCHAR(100),
 );
 
-CREATE TABLE Product (
+CREATE TABLE if not exists Product (
   productId INT PRIMARY KEY,
   productName VARCHAR(255),
   price DOUBLE,
@@ -52,7 +115,7 @@ CREATE TABLE Product (
   FOREIGN KEY (paymentId) REFERENCES payment(id)
 );
 
-CREATE TABLE Insurance (
+CREATE TABLE if not exists Insurance (
   id INT PRIMARY KEY,
   description TEXT,
   time INT,
@@ -62,7 +125,7 @@ CREATE TABLE Insurance (
   FOREIGN KEY (productId) REFERENCES product(productId)
 );
 
-CREATE TABLE Payment (
+CREATE TABLE if not exists Payment (
   id INT PRIMARY KEY,
   description TEXT,
   subTotal DOUBLE,
@@ -136,3 +199,4 @@ VALUES
   ("Noble Velasquez","(918) 852-5648","at.auctor.ullamcorper@outlook.com","28-407","Wyoming","Austria"),
   ("Kylynn Thompson","1-866-286-8493","ut.tincidunt@yahoo.org","87584","Diyarbakır","India"),
   ("Lane Mcmahon","1-281-468-7193","eleifend.nunc@outlook.couk","65108-128","Luxemburg","Germany");
+*/
