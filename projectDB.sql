@@ -9,135 +9,122 @@ CREATE TABLE [Troti_Users] (
   [name] VARCHAR(255) NOT NULL,
   [phone] VARCHAR(15) NOT NULL,
   [email] VARCHAR(255) NOT NULL,
-	[postalZip] VARCHAR(10) NOT NULL,
+  [postalZip] VARCHAR(10) NOT NULL,
   [region] VARCHAR(50) NOT NULL,
   [country] VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
 GO
 
+CREATE TABLE Troti_Orders (
+	id INTEGER NOT NULL IDENTITY(1,1),
+	oname VARCHAR(255) NOT NULL,
+	price REAL NOT NULL,
+	quantity INTEGER NOT NULL,
+	odate date NOT NULL,
+	users_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (users_id) REFERENCES Troti_Users(id)
+);
+GO
+
 /* drop table Troti_Inventory; */
-create table Troti_Inventory (
-	id integer not null IDENTITY(1, 1),
-	iname varchar(255) not null,
-	idescription varchar(255) not null,
-	stock integer not null,
-	cost real not null,
-	primary key(id)
+CREATE TABLE Troti_Inventory (
+	id INTEGER NOT NULL IDENTITY(1, 1),
+	iname VARCHAR(255) NOT NULL,
+	idescription VARCHAR(255) NOT NULL,
+	stock INTEGER NOT NULL,
+	cost REAL NOT NULL,
+	order_id INTEGER NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(order_id) REFERENCES Troti_Orders(id),
 );
 GO
 
 
-create table Troti_Supplier (
-	nif int not null,
-	sname varchar(255) not null,
-	phone varchar(20) not null,
-	email varchar(255) not null,
-	saddress varchar(255) not null,
-	postalZip varchar(10) not null,
-	country varchar(255) not null,
-	primary key (nif)
+CREATE TABLE Troti_Supplier (
+	nif INTEGER NOT NULL,
+	sname VARCHAR(255) NOT NULL,
+	phone VARCHAR(20) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	saddress VARCHAR(255) NOT NULL,
+	postalZip VARCHAR(10) NOT NULL,
+	country VARCHAR(255) NOT NULL,
+	PRIMARY KEY (nif)
 );
 GO
 
-create table Troti_Orders (
-	id integer not null identity(1,1),
-	oname varchar(255) not null,
-	price real not null,
-	quantity int not null,
-	odate date not null,
-	users_id int not null,
-	primary key (id),
-	foreign key (users_id) references Troti_Users(id)
-);
-GO
 
-create table Troti_Insurance(
-	id integer not null identity(1,1),
-  idescription varchar(255) not null,
-  idate date not null,
-  iprice real not null,
-  productId integer,
-  FOREIGN KEY (productId) REFERENCES product(productId),
+
+CREATE TABLE Troti_Insurance(
+	id INTEGER NOT NULL IDENTITY(1,1),
+  idescription VARCHAR(255) NOT NULL,
+  idate DATE NOT NULL,
+  iprice REAL NOT NULL,
+  productId INTEGER,
+  /*FOREIGN KEY (productId) REFERENCES product(productId), */
   PRIMARY KEY(id)
 );
 GO
 
-create table Troti_Product (
-	id int not null identity(1,1),
-	pname varchar(255) not null,
-	price real not null,
-	insurance_id int not null,
-	orders_id int not null,
-	supplier_nif int not null,
-	payment_id int not null,
-	foreign key(supplier_nif) references Troti_Supplier(nif),
-	foreign key(order_id) references Troti_Orders(id),
-	foreign key(insurance_id) references Troti_Insurance(id),
-	foreign key(payment_id) references Troti_Payment(id),
-	primary key(id)
-);
-GO
-
-create table Troti_Payment (
-  id int not null identity(1,1),
-  pdescription varchar(255) not null,
-  subtotal real not null,
-  pdate date not null,
-  productId integer not null,
-  FOREIGN KEY (productId) REFERENCES product(productId)
+CREATE TABLE Troti_Payment (
+  id INTEGER NOT NULL IDENTITY(1,1),
+  pdescription VARCHAR(255) NOT NULL,
+  subtotal REAL NOT NULL,
+  pdate DATE NOT NULL,
+  productId INTEGER NOT NULL,
+  /*FOREIGN KEY (productId) REFERENCES product(productId), */
   PRIMARY KEY(id)
 );
 GO
 
-/*
-
-CREATE TABLE if not exists Supplier (
-  SupplierNIF INT PRIMARY KEY,
-  SuppplierName VARCHAR(255),
-  SupplierPhone VARCHAR(20),
-  SupplierEmail VARCHAR(255),  
-  SupplierAddress VARCHAR(255)
-  SupplierPostalZip VARCHAR(10),
-  SupplierCountry VARCHAR(100),
+CREATE TABLE Troti_Product (
+	id INTEGER NOT NULL IDENTITY(1,1),
+	pname VARCHAR(255) NOT NULL,
+	price REAL NOT NULL,
+	insurance_id INTEGER NOT NULL,
+	orders_id INTEGER NOT NULL,
+	supplier_nif INTEGER NOT NULL,
+	payment_id INTEGER NOT NULL,
+	FOREIGN KEY(supplier_nif) REFERENCES Troti_Supplier(nif),
+	FOREIGN KEY(orders_id) REFERENCES Troti_Orders(id),
+	FOREIGN KEY(insurance_id) REFERENCES Troti_Insurance(id),
+	FOREIGN KEY(payment_id) REFERENCES Troti_Payment(id),
+	PRIMARY KEY(id)
 );
+GO
 
-CREATE TABLE if not exists Product (
-  productId INT PRIMARY KEY,
-  productName VARCHAR(255),
-  price DOUBLE,
-  orderId INT,
-  quantity INT,
-  supplierNIF INT,
-  FOREIGN KEY (supplierNIF) REFERENCES supplier(NIF)
-  FOREIGN KEY (orderId) REFERENCES orders(orderId),
-  FOREIGN KEY (insuranceId) REFERENCES insurance(id),
-  FOREIGN KEY (paymentId) REFERENCES payment(id)
+CREATE TABLE Troti_Alarm (
+  id INTEGER NOT NULL IDENTITY(1, 1),
+  alarm_name VARCHAR(255) NOT NULL,
+  alarm_description VARCHAR(255),
+  alarm_date DATE,
+  alarm_time TIME,
+  product_id INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (product_id) REFERENCES Troti_Product(id)
 );
+GO
 
-CREATE TABLE if not exists Insurance (
-  id INT PRIMARY KEY,
-  description TEXT,
-  time INT,
-  date DATE,
-  price DECIMAL(10, 2),
-  productId INT,
-  FOREIGN KEY (productId) REFERENCES product(productId)
-);
-
-CREATE TABLE if not exists Payment (
-  id INT PRIMARY KEY,
-  description TEXT,
-  subTotal DOUBLE,
-  tax DECIMAL(10, 2), 
-  date DATE,
-  productId INT,
-  FOREIGN KEY (productId) REFERENCES product(productId)
+CREATE TABLE Troti_Groups (
+  group_id INTEGER NOT NULL  IDENTITY(1, 1),
+  group_name VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT GETDATE(),
+  PRIMARY KEY (group_id)
 );
 
 
-
-
+CREATE TABLE Troti_Messages (
+  message_id INTEGER NOT NULL IDENTITY(1, 1),
+  message_text VARCHAR(255) NOT NULL,
+  sent_at DATETIME DEFAULT GETDATE(),
+  user_id INT NOT NULL,
+  group_id INT NOT NULL,
+  PRIMARY KEY (message_id),
+  FOREIGN KEY (user_id) REFERENCES Troti_Users(id),
+  FOREIGN KEY (group_id) REFERENCES Troti_Groups(group_id)
+);
+GO
 
 INSERT INTO `User` (`name`,`phone`,`email`,`postalZip`,`region`,`country`)
 VALUES
@@ -154,7 +141,7 @@ VALUES
 INSERT INTO `User` (`name`,`phone`,`email`,`postalZip`,`region`,`country`)
 VALUES
   ("Catherine Dickerson","1-673-121-4815","eleifend.cras.sed@google.edu","330335","North Kalimantan","New Zealand"),
-  ("Mufutau Head","1-931-518-4223","integer.aliquam@icloud.com","6658","South Gyeongsang","Nigeria"),
+  ("Mufutau Head","1-931-518-4223","INTEGER.aliquam@icloud.com","6658","South Gyeongsang","Nigeria"),
   ("Imogene Roth","(815) 828-4523","at.auctor@yahoo.com","87-140","Sutherland","Pakistan"),
   ("Diana Barron","(426) 360-4534","nec@protonmail.couk","2535","Ivanovo Oblast","Belgium"),
   ("Hu Branch","1-562-616-6921","urna.nullam.lobortis@hotmail.com","72166","Cartago","Netherlands"),
@@ -199,4 +186,3 @@ VALUES
   ("Noble Velasquez","(918) 852-5648","at.auctor.ullamcorper@outlook.com","28-407","Wyoming","Austria"),
   ("Kylynn Thompson","1-866-286-8493","ut.tincidunt@yahoo.org","87584","Diyarbakır","India"),
   ("Lane Mcmahon","1-281-468-7193","eleifend.nunc@outlook.couk","65108-128","Luxemburg","Germany");
-*/
