@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 app.get('/get_dbs', async (req, res) => {
     await sql.connect(config)
     const result = await sql.query(`select name from sys.databases`)
-    res.send(result.recordset)
+    res.send(result)
 });
 
 
