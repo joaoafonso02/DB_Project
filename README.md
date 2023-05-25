@@ -10,7 +10,7 @@ sudo docker run \
     -d mcr.microsoft.com/mssql/server:2022-latest;
 ```
 
-# Create the db
+## Create the db
 
 access the container
 ```
@@ -26,4 +26,16 @@ query to create the db
 ```
 create database testdb;
 GO
+```
+
+# Lauch the Backend
+```
+cd Backend
+npm run dev
+```
+
+# Lauch the Frontend
+```
+cd Frontend
+npm run dev
 ```
