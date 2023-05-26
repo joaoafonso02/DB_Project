@@ -1,29 +1,32 @@
 <script>
 	import PhoneAppLayout from './PhoneAppLayout.svelte';
-	import { onMount } from 'svelte';
-
-	let title = 'Welcome to TrotiNet';
-
-	onMount(() => {
-		document.title = title;
-	});
 </script>
 
-<PhoneAppLayout {title}>
-	<div class="phone-app-header">
-		<h1 class="text-center my-5">{title}</h1>
-	</div>
-	<img
-		src="/trotinet.jpg"
-		alt="TrotiNet logo"
-		class="mx-auto mt-3"
-		style="width: 100%; height: auto;"
-	/>
-	<div class="container" style="max-width: 300px;">
+<PhoneAppLayout>
+	<div class="text-center p-3">
+		<h1 class="mb-5">Welcome to TrotiNet</h1>
+		<img
+			class="mx-auto"
+			src="/trotinet.jpg"
+			alt="TrotiNet logo"
+		/>
 		<button
+			class="btn btn-secondary py-3"
 			type="button"
-			class="btn btn-outline-primary btn-lg mt-3 w-100"
 			on:click={() => (window.location.href = '/login')}>Login/Register</button
 		>
 	</div>
 </PhoneAppLayout>
+
+<style>
+	h1 {
+
+	}
+	img {
+		width: 100%;
+		height: 100%;
+	}
+	button {
+		width: 70%;
+	}
+</style>
