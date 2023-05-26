@@ -42,7 +42,9 @@
       {#if message}
         <div class="alert">{message}</div>
       {/if}
-      <br>
+      <div class="phone-app-header">
+		<h1 class="text-center my-5">{title}</h1>
+	</div>
       <!-- Jumbotron -->
       <div class="row g-0 align-items-center justify-content-center" >
         
@@ -87,7 +89,7 @@
                     </div>
                     <!-- Submit button -->
                     <div id="formSignin" onsubmit="submitSignin()">
-                      <button type="submit" class="btn btn-primary btn-block mb-4" on:click={submitSignin}>Sign in</button>
+                      <button type="submit" class="btn btn-primary btn-block mb-4"on:click={() => (window.location.href = '/map')}>Sign in</button>
                     </div>
                     <!-- Register buttons -->
                     <div class="text-center">
