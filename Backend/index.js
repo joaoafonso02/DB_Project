@@ -29,7 +29,7 @@ app.get('/get_dbs', async (req, res) => {
 //     res.send(await app.locals.db.query('select * from Users;'));
 // });
 
-// Start Expree and then Start SQL
+// Start Express and then Start SQL
 const port = 5000;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(config);
