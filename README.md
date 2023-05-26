@@ -24,7 +24,7 @@ connect to the SQL Server
 
 query to create the db
 ```
-create database testdb;
+create database TrotiNet;
 GO
 ```
 

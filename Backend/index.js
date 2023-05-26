@@ -1,12 +1,12 @@
-const express = require('express');
-const sql = require('mssql');
+import express from 'express';
+import sql from 'mssql'
 
 const config = {
     server: 'localhost',
     port: 1433,
     user: 'SA',
     password: '<batata@BD>',
-    database: 'testdb',
+    database: 'TrotiNet',
     options: {
         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
     },
@@ -15,33 +15,25 @@ const config = {
 // Create an instance of Express
 const app = express();
 
-(async () => {
-    try {
-        // make sure that any items are correctly URL encoded in the connection string
-        await sql.connect(config)
-        const result = await sql.query`select name from sys.databases`
-        console.dir(result)
-    } catch (err) {
-        console.log("bla",err)
-    }
-})();
-
 // Define routes
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
 
 app.get('/get_dbs', async (req, res) => {
-    await sql.connect(config)
-    const result = await sql.query(`select name from sys.databases`)
-    res.send(result)
+    res.send(await app.locals.db.query('select name from sys.databases;'));
 });
 
+// INFO: example of a simple bd query
+// app.get('/get_users', async (req, res) => {
+//     res.send(await app.locals.db.query('select * from Users;'));
+// });
 
-
-// Start the server
+// Start Expree and then Start SQL
 const port = 5000;
-app.listen(port, () => {
+app.listen(port, async () => {
+    app.locals.db = await sql.connect(config);
+    (await import('./createTables.js')).default(app.locals.db);
     console.log(`Server is running on port ${port}`);
 });
 
