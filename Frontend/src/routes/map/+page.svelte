@@ -1,5 +1,5 @@
 <script>
-  import PhoneAppLayout from '../PhoneAppLayout.svelte';
+  import PhoneAppLayout from '../../components/PhoneAppLayout.svelte';
   import { onMount } from 'svelte';
 
   let title = 'Map';

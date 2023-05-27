@@ -15,7 +15,7 @@
 	.phone-app-design {
 		background-color: white;
 		box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-    width: 60vh; /* Adjust the width as needed */
+		width: 60vh; /* Adjust the width as needed */
 		height: 90vh; /* Adjust the height as needed */
 		margin: 0 auto; /* Center the container horizontally */
 	}
