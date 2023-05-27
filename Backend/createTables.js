@@ -1,6 +1,9 @@
 import fs from 'fs';
 
 export default async function(bd) {
-  let sqlFile = fs.readFileSync('../projectDB.sql', 'utf-8');
-    await bd.query(sqlFile)
+  let filesInOrder = ['drops','tables','inserts'];
+  for(let file of filesInOrder) {
+    let sqlFile = fs.readFileSync('./sql/'+file+'.sql', 'utf-8');
+    await bd.query(sqlFile);
+  }
 }
