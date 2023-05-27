@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import PhoneAppLayout from '../../components/PhoneAppLayout.svelte';
 
 	// let title = 'Login';
 
@@ -100,42 +101,7 @@
 						</div>
 					</div>
 					<div id="formSignin">
-						<button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-					</div>
-				</form>
-        <form>
-					<br />
-					<div class="form-outline mb-4">
-						<label class="form-label" for="loginName">Username</label>
-						<input
-							id="formSigninUsername"
-							type="text"
-							class="form-control"
-							style="text-align: center;"
-						/>
-					</div>
-					<div class="form-outline mb-4">
-						<label class="form-label" for="loginPassword">Password</label>
-						<input
-							id="formSigninPassword"
-							type="password"
-							class="form-control"
-							style="text-align: center;"
-						/>
-					</div>
-					<div class="row mb-4">
-						<div class="col-md-6 d-flex justify-content-center">
-							<div class="form-check mb-3 mb-md-0">
-								<input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-								<label class="form-check-label" for="loginCheck"> Remember me </label>
-							</div>
-						</div>
-						<div class="col-md-6 d-flex justify-content-center">
-							<a href="#!">Forgot password?</a>
-						</div>
-					</div>
-					<div id="formSignin">
-						<button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+						<button type="submit" class="btn btn-primary btn-block mb-4" on:click={() => (window.location.href = '/map')}>Sign in</button>
 					</div>
 				</form>
 			</div>
@@ -183,22 +149,17 @@
 		border-style: in;
 	}
 	.nav-item .active {
-		background: #fafafa;
-		border-color: black;
 		border-bottom: 0;
-    font-size: 190%;
-    padding: 0;
+		font-size: 190%;
+		padding: 0;
 	}
 	.nav-item :not(.active) {
-		background: #d0d0d0;
-    color: black;
-		border-bottom: 1px solid black;
-    font-size: 100%;
-    padding: 10px;
+		background: #eee;
+    	color: black;
+		font-size: 100%;
+		padding: 10px;
 	}
 	.tab-content {
-		background: #fafafa;
-		border: 1px solid black;
 		border-top: 0;
 	}
 </style>

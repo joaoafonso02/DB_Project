@@ -1,5 +1,4 @@
 <script>
-	import PhoneAppLayout from '../components/PhoneAppLayout.svelte';
 </script>
 
 <div class="container-fluid text-center p-3">

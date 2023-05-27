@@ -1,5 +1,4 @@
 <script>
-  import PhoneAppLayout from '../../components/PhoneAppLayout.svelte';
   import { onMount } from 'svelte';
 
   let title = 'TrotiNet Map';
@@ -63,18 +62,33 @@
     }
 
   });
-  
-
 
 
 </script>
 
-<PhoneAppLayout {title}>
-  <div id="mapElements">
-    <h1 class="text-center my-5">{title}</h1>
-  </div>
-  <div id="map"></div>
-</PhoneAppLayout>
+<div class="position-relative h-100 w-100">
+  <h1 id="mapElements" style="text-align:center; top:1vh;">
+    <i class="fa fa-user" style="position: absolute; left: 5vh;"></i>
+    {title}
+    <i class="fa fa-qrcode" style="position: absolute; right: 5vh;"></i>
+ 
+  </h1>
+  <div id="map" style="height: calc(100%);"></div>
+</div> 
+
+<!-- 
+<div class="position-relative h-100 w-100">
+  
+  <div id="map" style="height: calc(100%);"></div>
+  <h1 id="mapElements" style="text-align:center; bottom:1vh;">
+    <i class="fa fa-user" style="position: absolute; left:2vh;"></i>
+    {title}
+    <i class="fa fa-qrcode" style="position: absolute; right: 2vh;"></i>
+ 
+  </h1>
+</div> -->
+
+
 
 <style>
   #map {
@@ -87,4 +101,3 @@
     z-index: 1000;
   }
 </style>
-
