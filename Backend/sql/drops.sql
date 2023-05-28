@@ -1,13 +1,12 @@
-drop table Messages;
-drop table TGroups;
-drop table Alarm;
-drop table Product;
 
-drop table Inventory;
-drop table Orders;
-drop table UAuthentication;
-drop table Users;
-
-drop table Supplier;
-drop table Insurance;
-drop table Payment;
+drop TABLE Messages;
+drop TABLE TGroups;
+drop TABLE Alarm;
+drop TABLE Product; 
+drop TABLE Inventory;
+drop TABLE Orders;
+drop TABLE UAuthentication;
+drop TABLE Users;
+drop TABLE Supplier;
+drop TABLE Insurance;
+drop TABLE Payment;
