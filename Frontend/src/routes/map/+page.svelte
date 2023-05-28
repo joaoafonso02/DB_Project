@@ -8,15 +8,32 @@
   let destinationMarker;
   let distance = null;
   let chosenTroti = null;
+  let tripStarted = false;
   let paidTrip = false;
   let tripisOver= false;
   let message = 'Choose Troti';
+  
 
   function showAlert(msg) {
     message = msg;
   }
 
   onMount(() => {
+    let confirmButton = document.getElementById('confirmbutton');
+    let confirmButton2 = document.getElementById('confirmbutton2');
+    let cancelbutton  = document.getElementById('cancelbutton');
+    let endTripButton = document.getElementById('endTrip');
+
+    let modal = document.getElementById("myModal");
+    let openModal = document.getElementById("openModal");
+    let closeModal = document.getElementsByClassName("close")[0];
+
+    let QRmodal = document.getElementById("QRCode");
+    let QRopenModal = document.getElementById("QRCodeModal");
+    let QRcloseModal = document.getElementsByClassName("close")[0];
+
+    let trotiNumber = 1;
+
     document.title = title;
 
     let userIcon = L.icon({
@@ -40,12 +57,6 @@
       popupAnchor: [0, -50]
     });
 
-    const modal = document.getElementById("myModal");
-    const openModal = document.getElementById("openModal");
-    const closeModal = document.getElementsByClassName("close")[0];
-
-    
-
     openModal.onclick = function () {
       modal.style.display = "block";
     };
@@ -59,12 +70,6 @@
         modal.style.display = "none";
       }
     };
-    
-    const QRmodal = document.getElementById("QRCode");
-    const QRopenModal = document.getElementById("QRCodeModal");
-    const QRcloseModal = document.getElementsByClassName("close")[0];
-
-    
 
     QRopenModal.onclick = function () {
       QRmodal.style.display = "block";
@@ -87,8 +92,7 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // adding trotinets
-    let trotiNumber = 1;
+ 
 
     function createTrotis(icon, lat, lng, count) {
       for (let i = 0; i < count; i++) {
@@ -129,11 +133,14 @@
     // remove leflet control zoom
     map.removeControl(map.zoomControl);
 
-    let confirmButton = document.getElementById('confirmbutton');
-    let cancelbutton  = document.getElementById('cancelbutton');
-    let endTripButton = document.getElementById('endTrip');
-
     confirmButton.addEventListener('click', function () {
+      simulateConfirmButtonClick();
+    }); 
+
+   
+    function simulateConfirmButtonClick() {
+      tripStarted = true;
+      console.log('Trip started');
       paidTrip = true;
       choosingDestination = false;
       modal.style.display = "none";
@@ -158,7 +165,7 @@
         destinationMarker.bindPopup(popupContent);
         destinationMarker.openPopup();
       }
-    });
+    }
 
     cancelbutton.addEventListener('click', function () {
       modal.style.display = "none";
@@ -166,27 +173,85 @@
     });
 
     if (endTripButton) {
-      endTripButton.addEventListener('click', function () {
-        console.log('Trip ended');
-        paidTrip = false;
-        choosingDestination = true;
-        tripisOver = false;
-        endTripButton.style.display = 'none';
-        message = 'Trip is over!';
-        setTimeout(() => {
-          message = 'Choose Troti';
-        }, 3000);
-        map.removeLayer(destinationMarker);
-        if (destinationMarker) {
-          map.removeLayer(destinationMarker);
-        }
-        if (chosenTroti) {
-          chosenTroti.closePopup();
-        }
-      });
+  endTripButton.addEventListener('click', function () {
+    console.log('Trip ended');
+    paidTrip = false;
+    choosingDestination = true;
+    tripisOver = false;
+    endTripButton.style.display = 'none';
+    message = 'Trip is over!';
+
+    // Create rate popup
+    let rateTextContent = document.createElement('div');
+    rateTextContent.classList.add('rate-text');
+    rateTextContent.innerHTML = 'Rate your trip:';
+    rateTextContent.style.textAlign = 'center';
+    rateTextContent.style.fontSize = '15px';
+    rateTextContent.style.color = '#ff9d22';
+
+
+    let ratePopupContent = document.createElement('div');
+    ratePopupContent.classList.add('rate-popup');
+
+    let starsContainer = document.createElement('div');
+    starsContainer.classList.add('stars-container');
+
+    for (let i = 1; i <= 5; i++) {
+      let starInput = document.createElement('input');
+      starInput.type = 'radio';
+      starInput.name = 'rating';
+      starInput.value = i;
+
+      let starLabel = document.createElement('label');
+      starLabel.htmlFor = 'rating-' + i;
+      starLabel.classList.add('star');
+
+      starsContainer.appendChild(starInput);
+      starsContainer.appendChild(starLabel);
     }
 
+    ratePopupContent.appendChild(rateTextContent);
+    ratePopupContent.appendChild(starsContainer);
+    
 
+    // Display rate popup
+    let ratePopup = L.popup()
+      .setLatLng(chosenTroti.getLatLng())
+      .setContent(ratePopupContent)
+      .openOn(map);
+
+    setTimeout(() => {
+      ratePopup.remove();
+      setTimeout(() => {
+        message = 'Choose Troti';
+      }, 3000);
+    }, 5000);
+
+    if (destinationMarker) {
+      map.removeLayer(destinationMarker);
+    }
+    if (chosenTroti) {
+      chosenTroti.closePopup();
+    }
+  });
+}
+
+
+    // QRCODE CONFIRM BUTTON
+    confirmButton2.addEventListener('click', function () {
+      QRmodal.style.display = "none";
+    });
+
+    // read code
+    document.getElementById("qrcodeImage")?.addEventListener("click", function () {
+      alert("Code Read! Choose your Troti and You're good to go!");
+      QRmodal.style.display = "none";
+    
+    });
+
+
+
+    
     
     map.on('click', function (e) {
       if (choosingDestination) {
@@ -267,8 +332,8 @@
   <div class="modal-content center">
     <span class="close">&times;</span>   
     <h2>Search and Scan Troti's QRCode</h2>
-    <img src="qrcode.png" alt="QRCode" style="width:100%">
-    <button class="button button--full mt-4" type="submit" id="confirmbutton">Confirm</button>
+    <img src="qrcode.png" id="qrcodeImage" alt="QRCode" style="width:80%">
+    <button class="button button--full mt-4" type="submit" id="confirmbutton2">Confirm</button>
   </div>
 </div>
 

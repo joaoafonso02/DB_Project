@@ -88,6 +88,31 @@
         inline-size: 100%;
     }
 
+    /* copy from above */
+    #confirmbutton2 {
+        border: 0;
+        align-items: center;
+        background-color: var(--color-primary);
+        border-radius: 999em;
+        color: #fff;
+        background-color: #4CAF50;
+        display: flex;
+        gap: 0.5em;
+        justify-content: center;
+        padding-block: 0.75em;
+        padding-inline: 1em;
+        transition: 0.3s;
+    }
+
+    #confirmbutton2:focus,
+    #confirmbutton2:hover {
+        background-color: #228f26;
+    }
+
+    #confirmbutton2.button--full {
+        inline-size: 100%;
+    }
+
     #cancelbutton {
         border: 0;
         align-items: center;
@@ -242,3 +267,24 @@
         border-radius: 10px;
     }
 
+/* rating popup */
+.rate-popup {
+    text-align: center;
+    font-size: 15px;
+  }
+  
+  .stars-container {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 30px;
+  }
+  
+  .star {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('/star.png');
+    background-size: contain;
+    background-position: center center; /* Center the star image */
+    cursor: pointer;
+  }
