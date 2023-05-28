@@ -29,7 +29,7 @@ CREATE TABLE Orders (
 	FOREIGN KEY (users_id) REFERENCES Users(id)
 );
 
-/* drop table Troti_Inventory; */
+/* drop TABLE Inventory; */
 CREATE TABLE Inventory (
 	id INTEGER NOT NULL IDENTITY(1, 1),
 	iname VARCHAR(255) NOT NULL,

@@ -13,6 +13,16 @@ const config = {
         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
     },
 };
+// const config = {
+//     server: 'mednat.ieeta.pt',
+//     port: 8101,
+//     user: 'p1g7',
+//     password: 'batata@BD',
+//     database: 'p1g7',
+//     options: {
+//         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
+//     },
+// };
 
 // Create an instance of Express
 const app = express();
