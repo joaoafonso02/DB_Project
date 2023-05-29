@@ -271,10 +271,33 @@ VALUES
   ('The Innovators', '2023-06-16'),
   ('The Illuminators', '2023-06-17'),
   ('The Explorers', '2023-06-18');
-
+  
+-- TGROUPSMEMBERS INSERTION  
+INSERT INTO TGroupsMembers (user_id, group_id)
+VALUES
+  (1, 1),
+  (2, 1),
+  (3, 1),
+  (4, 1),
+  (5, 1),
+  (6, 2),
+  (7, 2),
+  (8, 2),
+  (9, 2),
+  (10, 2),
+  (11, 3),
+  (12, 3),
+  (13, 3),
+  (14, 3),
+  (15, 3),
+  (16, 4),
+  (17, 4),
+  (18, 4),
+  (19, 4),
+  (20, 4);
 
 -- MESSAGES INSERTION
-INSERT INTO Messages (message_text, sent_at, user_id, group_id) 
+INSERT INTO Messages (msg_text, sent_at, user_id, group_id) 
 VALUES
   ('Hello everyone! Welcome to our group!', '2023-05-30 10:00:00', 1, 1),
   ('Hi! I''m excited to be here!', '2023-05-30 10:01:00', 2, 1),
@@ -296,8 +319,6 @@ VALUES
   ('Same here! Let''s do this!', '2023-06-02 10:03:00', 18, 4),
   ('Hello everyone! Welcome to our group!', '2023-06-03 10:00:00', 19, 5),
   ('Hi! I''m excited to be here!', '2023-06-03 10:01:00', 20, 5);
-
-
 
 
 
