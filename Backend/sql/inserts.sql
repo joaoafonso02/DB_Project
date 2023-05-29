@@ -1,4 +1,9 @@
-
+-- Our Users
+INSERT INTO Users (name)
+VALUES
+  ('admin'),
+  ('edu'),
+  ('afonso');
 INSERT INTO Users (name,phone,email,postalZip,region,country)
 VALUES
   ('Myra Nieves','(926) 370-4452','pede.cras@google.couk','5954 QQ','South Jeolla','Nigeria'),

@@ -1,5 +1,6 @@
 
 drop TABLE Messages;
+drop TABLE TGroupsMembers;
 drop TABLE TGroups;
 drop TABLE Alarm;
 drop TABLE Product; 
