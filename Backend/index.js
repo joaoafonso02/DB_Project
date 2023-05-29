@@ -5,26 +5,26 @@ import hat from 'hat';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-const config = {
-    server: 'localhost',
-    port: 1433,
-    user: 'SA',
-    password: '<batata@BD>',
-    database: 'TrotiNet',
-    options: {
-        trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
-    },
-};
 // const config = {
-//     server: 'mednat.ieeta.pt',
-//     port: 8101,
-//     user: 'p1g7',
-//     password: 'batata@BD',
-//     database: 'p1g7',
+//     server: 'localhost',
+//     port: 1433,
+//     user: 'SA',
+//     password: '<batata@BD>',
+//     database: 'TrotiNet',
 //     options: {
 //         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
 //     },
 // };
+const config = {
+    server: 'mednat.ieeta.pt',
+    port: 8101,
+    user: 'p1g7',
+    password: 'batata@BD',
+    database: 'p1g7',
+    options: {
+        trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
+    },
+};
 
 // Create an instance of Express
 const app = express();
@@ -139,7 +139,7 @@ app.post('/post_new_chat', async (req,res)=>{
 
 
 // Start Express and then Start SQL
-const port = 5000;
+const port = 5001;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(config);
     (await import('./createTables.js')).default(app.locals.db);
