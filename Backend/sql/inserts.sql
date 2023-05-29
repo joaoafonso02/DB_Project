@@ -67,9 +67,11 @@ VALUES
 
 
 -- Authentication insert
-INSERT INTO UAuthentication (id,username,upass,utoken)
-VALUES
-    (2,'miraNieves','miranocu','token');
+INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
+  (1,'admin','admin','token'),
+  (2,'edu','edu','token'),
+  (3,'afonso','afonso','token'),
+  (4,'miraNieves','miranocu','token');
 
 -- Supplier Insertion
 INSERT INTO Supplier (nif, sname, phone, email, saddress, postalZip, country)
@@ -250,82 +252,64 @@ VALUES
   ('Evening Reflection', 'Reflect on your day and practice gratitude', '2023-06-18', '21:00:00', 20);
 
 -- TGROUPS INSERTION
-INSERT INTO TGroups (group_name, created_at)
-VALUES
-  ('The Innovators', '2023-05-30'),
-  ('Dream Team', '2023-05-31'),
-  ('Power Squad', '2023-06-01'),
-  ('Visionaries', '2023-06-02'),
-  ('The Mavericks', '2023-06-03'),
-  ('Trailblazers', '2023-06-04'),
-  ('The Avengers', '2023-06-05'),
-  ('The Dreamweavers', '2023-06-06'),
-  ('Chaos Crew', '2023-06-07'),
-  ('The Phoenixes', '2023-06-08'),
-  ('The Rockstars', '2023-06-09'),
-  ('The Fireflies', '2023-06-10'),
-  ('The Magic Makers', '2023-06-11'),
-  ('The Journeyers', '2023-06-12'),
-  ('The Outliers', '2023-06-13'),
-  ('The Whiz Kids', '2023-06-14'),
-  ('The Game Changers', '2023-06-15'),
-  ('The Innovators', '2023-06-16'),
-  ('The Illuminators', '2023-06-17'),
-  ('The Explorers', '2023-06-18');
+-- INSERT INTO TGroups (group_name, created_at)
+-- VALUES
+--   ('The Innovators', '2023-05-30'),
+--   ('Dream Team', '2023-05-31'),
+--   ('Power Squad', '2023-06-01'),
+--   ('Visionaries', '2023-06-02'),
+--   ('The Mavericks', '2023-06-03'),
+--   ('Trailblazers', '2023-06-04'),
+--   ('The Avengers', '2023-06-05'),
+--   ('The Dreamweavers', '2023-06-06'),
+--   ('Chaos Crew', '2023-06-07'),
+--   ('The Phoenixes', '2023-06-08'),
+--   ('The Rockstars', '2023-06-09'),
+--   ('The Fireflies', '2023-06-10'),
+--   ('The Magic Makers', '2023-06-11'),
+--   ('The Journeyers', '2023-06-12'),
+--   ('The Outliers', '2023-06-13'),
+--   ('The Whiz Kids', '2023-06-14'),
+--   ('The Game Changers', '2023-06-15'),
+--   ('The Innovators', '2023-06-16'),
+--   ('The Illuminators', '2023-06-17'),
+--   ('The Explorers', '2023-06-18');
   
 -- TGROUPSMEMBERS INSERTION  
-INSERT INTO TGroupsMembers (user_id, group_id)
-VALUES
-  (1, 1),
-  (2, 1),
-  (3, 1),
-  (4, 1),
-  (5, 1),
-  (6, 2),
-  (7, 2),
-  (8, 2),
-  (9, 2),
-  (10, 2),
-  (11, 3),
-  (12, 3),
-  (13, 3),
-  (14, 3),
-  (15, 3),
-  (16, 4),
-  (17, 4),
-  (18, 4),
-  (19, 4),
-  (20, 4);
+-- INSERT INTO TGroupsMembers (user_id, group_id)
+-- VALUES
+--   (1, 1),
+--   (2, 1),
+--   (3, 1),
+--   (4, 1),
+--   (5, 1),
+--   (6, 2),
+--   (7, 2),
+--   (8, 2),
+--   (9, 2),
+--   (10, 2),
+--   (11, 3),
+--   (12, 3),
+--   (13, 3),
+--   (14, 3),
+--   (15, 3),
+--   (16, 4),
+--   (17, 4),
+--   (18, 4),
+--   (19, 4),
+--   (20, 4);
 
--- MESSAGES INSERTION
-INSERT INTO Messages (msg_text, sent_at, user_id, group_id) 
-VALUES
-  ('Hello everyone! Welcome to our group!', '2023-05-30 10:00:00', 1, 1),
-  ('Hi! I''m excited to be here!', '2023-05-30 10:01:00', 2, 1),
-  ('Me too! I can''t wait to get started!', '2023-05-30 10:02:00', 3, 1),
-  ('I''m looking forward to working with you all!', '2023-05-30 10:03:00', 4, 1),
-  ('Same here! Let''s do this!', '2023-05-30 10:04:00', 5, 1),
-  ('Hey everyone! I''m excited to be here!', '2023-05-31 10:00:00', 6, 2),
-  ('Me too! I can''t wait to get started!', '2023-05-31 10:01:00', 7, 2),
-  ('I''m looking forward to working with you all!', '2023-05-31 10:02:00', 8, 2),
-  ('Same here! Let''s do this!', '2023-05-31 10:03:00', 9, 2),
-  ('Hello everyone! Welcome to our group!', '2023-06-01 10:00:00', 10, 3),
-  ('Hi! I''m excited to be here!', '2023-06-01 10:01:00', 11, 3),
-  ('Me too! I can''t wait to get started!', '2023-06-01 10:02:00', 12, 3),
-  ('I''m looking forward to working with you all!', '2023-06-01 10:03:00', 13, 3),
-  ('Same here! Let''s do this!', '2023-06-01 10:04:00', 14, 3),
-  ('Hey everyone! I''m excited to be here!', '2023-06-02 10:00:00', 15, 4),
-  ('Me too! I can''t wait to get started!', '2023-06-02 10:01:00', 16, 4),
-  ('I''m looking forward to working with you all!', '2023-06-02 10:02:00', 17, 4),
-  ('Same here! Let''s do this!', '2023-06-02 10:03:00', 18, 4),
-  ('Hello everyone! Welcome to our group!', '2023-06-03 10:00:00', 19, 5),
-  ('Hi! I''m excited to be here!', '2023-06-03 10:01:00', 20, 5);
+-- -- MESSAGES INSERTION
+-- INSERT INTO Messages (msg_text, sent_at, user_id, group_id) 
+-- VALUES
+--   ('Hey everyone! I''m excited to be here!', '2023-06-02 10:00:00', 15, 4),
+--   ('Me too! I can''t wait to get started!', '2023-06-02 10:01:00', 16, 4),
+--   ('I''m looking forward to working with you all!', '2023-06-02 10:02:00', 17, 4),
+--   ('Same here! Let''s do this!', '2023-06-02 10:03:00', 18, 4),
+--   ('Hello everyone! Welcome to our group!', '2023-06-03 10:00:00', 19, 5),
+--   ('Hi! I''m excited to be here!', '2023-06-03 10:01:00', 20, 5);
 
-INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
-  (1,'admin','admin','token'),
-  (2,'edu','edu','token'),
-  (3,'afonso','afonso','token'),
-  (4,'miraNieves','miranocu','token');
+
 
 insert into TGroups (group_name) values
   (''), -- empty string is used when group has two users
