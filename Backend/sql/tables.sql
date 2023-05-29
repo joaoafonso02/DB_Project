@@ -106,10 +106,15 @@ CREATE TABLE TGroups (
   PRIMARY KEY (group_id)
 );
 
+CREATE TABLE TGroupsMembers (
+  group_id INTEGER not null,
+  user_id INTEGER not null
+)
+
 
 CREATE TABLE Messages (
   message_id INTEGER NOT NULL IDENTITY(1, 1),
-  message_text VARCHAR(255) NOT NULL,
+  msg_text VARCHAR(255) NOT NULL,
   sent_at DATETIME DEFAULT GETDATE(),
   user_id INT NOT NULL,
   group_id INT NOT NULL,

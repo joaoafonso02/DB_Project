@@ -27,6 +27,7 @@
 			return;
 		}
 		localStorage.setItem('utoken', data.token);
+		localStorage.setItem('username', l_username);
 		window.location.href = '/map';
 	}
 
@@ -65,6 +66,7 @@
 			return;
 		}
 		localStorage.setItem('utoken', data.token);
+		localStorage.setItem('username', r_username);
 		window.location.href = '/map';
 	}
 
