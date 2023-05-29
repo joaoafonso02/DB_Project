@@ -306,9 +306,9 @@
 
 <div class="position-relative h-100 w-100">
   <h1 id="mapElements" style="text-align:center;">
-    <i class="fa fa-user" style="position: absolute; left: 2vh; cursor: pointer;"></i>
+    <i class="fa fa-user" style="position: absolute; left: 2vh; cursor: pointer;" on:click={() => (window.location.href = '/profile')}></i>
     {title}
-    <i class="fa fa-users" style="position: absolute; right: 7vh; cursor: pointer;"></i> 
+    <i class="fa fa-users" style="position: absolute; right: 7vh; cursor: pointer;" on:click={() => (window.location.href = '/chat')}></i> 
     <i class="fa fa-qrcode" style="position: absolute; right: 2vh; cursor: pointer;" id="QRCodeModal" ></i>
     <div id="openModal" style="display:none"></div>
   </h1>
