@@ -65,6 +65,7 @@ VALUES
   ('Kylynn Thompson','1-866-286-8493','ut.tincidunt@yahoo.org','87584','Diyarbakır','India'),
   ('Lane Mcmahon','1-281-468-7193','eleifend.nunc@outlook.couk','65108-128','Luxemburg','Germany');
 
+
 -- Authentication insert
 INSERT INTO UAuthentication (id,username,upass,utoken)
 VALUES
@@ -320,6 +321,31 @@ VALUES
   ('Hello everyone! Welcome to our group!', '2023-06-03 10:00:00', 19, 5),
   ('Hi! I''m excited to be here!', '2023-06-03 10:01:00', 20, 5);
 
+INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
+  (1,'admin','admin','token'),
+  (2,'edu','edu','token'),
+  (3,'afonso','afonso','token'),
+  (4,'miraNieves','miranocu','token');
 
+insert into TGroups (group_name) values
+  (''), -- empty string is used when group has two users
+  (''),
+  ('edu_afonso_admin'); -- this is just the name
 
+insert into TGroupsMembers (group_id, user_id) VALUES
+  (1,1), -- group 1 -> admin
+  (1,2), -- group 1 -> edu
+  (2,1), -- group 2 -> admin
+  (2,3), -- group 2 -> afonso
+  (3,1), -- group 3 -> admin
+  (3,2), -- group 3 -> edu
+  (3,3); -- group 3 -> afonso
+
+insert into Messages (msg_text,group_id,user_id) VALUES
+  ('ola',1,1),
+  ('entao',1,2),
+  ('ola123',3,1),
+  ('ola123',3,2),
+  ('ola123',3,3),
+  ('ola123',1,2);
 
