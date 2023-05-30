@@ -31,6 +31,7 @@ GO
 # Launch the Backend
 ```
 cd Backend
+npm install socket.io
 sudo npm install
 npm run dev
 ```
