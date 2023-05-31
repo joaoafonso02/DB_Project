@@ -63,6 +63,28 @@ app.post('/post_register', async (req,res)=>{
     res.send({status:"ok",token});
 });
 
+/* USER PROFILE */
+app.post('/post_profile', async (req,res)=>{
+    const {username,utoken} = req.body;
+    let query2 = await app.locals.db.query(`select username, name, phone, email, postalZip,region, country from Users INNER JOIN UAuthentication ON Users.id=UAuthentication.id where UAuthentication.username='${username}' and UAuthentication.utoken='${utoken}'`)
+    console.log(query2)
+    res.send(query2.recordset[0])
+})
+app.post('/post_profile_edit', async (req,res) => {
+    const {username,utoken,name,phone,email,postalZip,region,country} = req.body;
+    let query1 = await app.locals.db.query(`select id from UAuthentication where username='${username}' and utoken='${utoken}';`)
+    let id = query1.recordset[0].id;
+    let query2 = await app.locals.db.query(`update Users set name='${name}', phone='${phone}', email='${email}', postalZip='${postalZip}', region='${region}', country='${country}'`);
+})
+app.post('/post_profile_delete', async (req,res) => {
+    const {username,utoken} = req.body;
+    let query1 = await app.locals.db.query(`select id from UAuthentication where username='${username}' and utoken='${utoken}';`)
+    let id = query1.recordset[0].id;
+    let query2 = await app.locals.db.query(`delete from UAuthentication where id=${id}`)
+    let query3 = await app.locals.db.query(`delete from Users where id=${id}`)
+    res.send({status:'ok'})
+})
+
 /* CHAT ROUTES */
 app.post('/post_my_chats', async (req,res)=>{
     const {username,utoken} = req.body;

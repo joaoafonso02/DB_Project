@@ -1,9 +1,9 @@
 -- Our Users
-INSERT INTO Users (name)
+INSERT INTO Users (name,phone,email,postalZip,region,country)
 VALUES
-  ('admin'),
-  ('edu'),
-  ('afonso');
+  ('admin','919875123','admin@trotinet.pt','0000-000','Lisbon','Portugal'),
+  ('edu','939585218','edu@edu.pt','3750-811','Agueda','Portugal'),
+  ('afonso','964419133','afonso@afonso.pt','3800-311','Aveiro','Portugal');
 INSERT INTO Users (name,phone,email,postalZip,region,country)
 VALUES
   ('Myra Nieves','(926) 370-4452','pede.cras@google.couk','5954 QQ','South Jeolla','Nigeria'),
@@ -311,25 +311,25 @@ VALUES
 
 
 
-insert into TGroups (group_name) values
-  (''), -- empty string is used when group has two users
-  (''),
-  ('edu_afonso_admin'); -- this is just the name
+-- insert into TGroups (group_name) values
+--   (''), -- empty string is used when group has two users
+--   (''),
+--   ('edu_afonso_admin'); -- this is just the name
 
-insert into TGroupsMembers (group_id, user_id) VALUES
-  (1,1), -- group 1 -> admin
-  (1,2), -- group 1 -> edu
-  (2,1), -- group 2 -> admin
-  (2,3), -- group 2 -> afonso
-  (3,1), -- group 3 -> admin
-  (3,2), -- group 3 -> edu
-  (3,3); -- group 3 -> afonso
+-- insert into TGroupsMembers (group_id, user_id) VALUES
+--   (1,1), -- group 1 -> admin
+--   (1,2), -- group 1 -> edu
+--   (2,1), -- group 2 -> admin
+--   (2,3), -- group 2 -> afonso
+--   (3,1), -- group 3 -> admin
+--   (3,2), -- group 3 -> edu
+--   (3,3); -- group 3 -> afonso
 
-insert into Messages (msg_text,group_id,user_id) VALUES
-  ('ola',1,1),
-  ('entao',1,2),
-  ('ola123',3,1),
-  ('ola123',3,2),
-  ('ola123',3,3),
-  ('ola123',1,2);
+-- insert into Messages (msg_text,group_id,user_id) VALUES
+--   ('ola',1,1),
+--   ('entao',1,2),
+--   ('ola123',3,1),
+--   ('ola123',3,2),
+--   ('ola123',3,3),
+--   ('ola123',1,2);
 
