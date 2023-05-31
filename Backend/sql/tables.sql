@@ -109,6 +109,7 @@ CREATE TABLE TGroups (
 CREATE TABLE TGroupsMembers (
   group_id INTEGER not null,
   user_id INTEGER not null
+  PRIMARY KEY (group_id, user_id)
 )
 
 

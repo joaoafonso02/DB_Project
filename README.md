@@ -1,5 +1,5 @@
 
-# Lauch the MSSQL docker
+# launch the MSSQL docker
 ```
 sudo docker run \
     -e "ACCEPT_EULA=Y" \
@@ -28,14 +28,14 @@ create database TrotiNet;
 GO
 ```
 
-# Lauch the Backend
+# Launch the Backend
 ```
 cd Backend
 npm install
 npm run dev
 ```
 
-# Lauch the Frontend
+# Launch the Frontend
 ```
 cd Frontend
 npm install
