@@ -11,7 +11,7 @@ CREATE TABLE Users (
 
 CREATE TABLE UAuthentication (
   id INTEGER NOT NULL,
-  username VARCHAR(32) NOT NULL,
+  username VARCHAR(32) NOT NULL UNIQUE,
   upass VARCHAR(64) NOT NULL,
   utoken VARCHAR(64) NOT NULL,
   PRIMARY KEY (id),

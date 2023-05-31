@@ -149,9 +149,15 @@
 			<div class="list-group">
 				{#if chats.length}
 					{#each chats as chat}
-						<button
+						<button id="chatButton"
 							on:click={openChatAction(event, chat.group_id)}
-							class="list-group-item list-group-item-action rounded-0">{chat.group_name}</button
+							class="position-relative list-group-item list-group-item-action rounded-0">
+								{chat.group_name}
+								<button id="chatDeleteButton" class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0" style="">
+									<i class="fa fa-trash " />
+								</button>
+								<span id="chatSpanButton" class="position-absolute w-100 h-100 top-0 start-0"></span>
+							</button
 						>
 					{/each}
 				{:else}
@@ -257,4 +263,14 @@
 	#messagesBox {
 		height: calc(100% - 100px);
 	}
+	#chatDeleteButton {
+		z-index:1000;
+		background: none;
+	}
+	#chatDeleteButton:hover {  
+	}
+	#chatDeleteButton:hover ~ #chatSpanButton  {  
+		background: rgba(255,0,0,0.4);
+	}
+
 </style>

@@ -2,8 +2,6 @@ import express from 'express';
 import sql from 'mssql';
 import cors from 'cors';
 import hat from 'hat';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
 
 const config = {
     server: 'localhost',
@@ -32,10 +30,10 @@ app.use(express.json());
 app.use(cors());
 
 // create websocket server
-const app2 = express();
-const server = createServer(app2);
-const io = new Server(server);
-app2.use(cors())
+// const app2 = express();
+// const server = createServer(app2);
+// const io = new Server(server);
+// app2.use(cors())
 
 // Define routes
 app.get('/', (req, res) => {

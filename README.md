@@ -31,11 +31,13 @@ GO
 # Lauch the Backend
 ```
 cd Backend
+npm install
 npm run dev
 ```
 
 # Lauch the Frontend
 ```
 cd Frontend
+npm install
 npm run dev
 ```
