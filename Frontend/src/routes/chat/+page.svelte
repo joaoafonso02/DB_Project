@@ -100,6 +100,20 @@
 	async function create_new_chat() {
 		openAdd = true;
 	}
+
+	async function fetchChats() {
+		let resp2 = await fetch('http://localhost:5000/post_my_chats', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username: localStorage.getItem('username'),
+				utoken: localStorage.getItem('utoken')
+			})
+		});
+		chats = await resp2.json();
+	}
 	async function create_new_chat_submit() {
 		openAdd = true;
 		console.log(newChatTitle, newChatUsers.split(" "))
@@ -116,18 +130,25 @@
 			})
 		});
 		openAdd = false;
-		let resp2 = await fetch('http://localhost:5000/post_my_chats', {
+		fetchChats();
+	}
+
+	async function delete_chat(event, group_id) {
+		event.stopPropagation();
+		let resp2 = await fetch('http://localhost:5000/post_delete_chat', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				username: localStorage.getItem('username'),
-				utoken: localStorage.getItem('utoken')
+				utoken: localStorage.getItem('utoken'),
+				group_id
 			})
 		});
-		chats = await resp2.json();
+		fetchChats();
 	}
+
 </script>
 
 {#if !openChat && !openAdd}
@@ -153,7 +174,7 @@
 							on:click={openChatAction(event, chat.group_id)}
 							class="position-relative list-group-item list-group-item-action rounded-0">
 								{chat.group_name}
-								<button id="chatDeleteButton" class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0" style="">
+								<button on:click={delete_chat(event, chat.group_id)} id="chatDeleteButton" class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0" style="">
 									<i class="fa fa-trash " />
 								</button>
 								<span id="chatSpanButton" class="position-absolute w-100 h-100 top-0 start-0"></span>
@@ -267,7 +288,7 @@
 		z-index:1000;
 		background: none;
 	}
-	#chatDeleteButton:hover {  
+	#chatDeleteButton:hover {
 	}
 	#chatDeleteButton:hover ~ #chatSpanButton  {  
 		background: rgba(255,0,0,0.4);

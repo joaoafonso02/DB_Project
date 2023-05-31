@@ -1,4 +1,4 @@
-
+drop PROCEDURE InsertUserWithAuthentication;
 drop TABLE Messages;
 drop TABLE TGroupsMembers;
 drop TABLE TGroups;

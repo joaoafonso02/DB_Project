@@ -3,37 +3,31 @@ import sql from 'mssql';
 import cors from 'cors';
 import hat from 'hat';
 
-// const config = {
-//     server: 'localhost',
-//     port: 1433,
-//     user: 'SA',
-//     password: '<batata@BD>',
-//     database: 'TrotiNet',
-//     options: {
-//         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
-//     },
-// };
 const config = {
-    server: 'mednat.ieeta.pt',
-    port: 8101,
-    user: 'p1g7',
-    password: 'batata@BD',
-    database: 'p1g7',
+    server: 'localhost',
+    port: 1433,
+    user: 'SA',
+    password: '<batata@BD>',
+    database: 'TrotiNet',
     options: {
         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
     },
 };
+// const config = {
+//     server: 'mednat.ieeta.pt',
+//     port: 8101,
+//     user: 'p1g7',
+//     password: 'batata@BD',
+//     database: 'p1g7',
+//     options: {
+//         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
+//     },
+// };
 
 // Create an instance of Express
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-// create websocket server
-// const app2 = express();
-// const server = createServer(app2);
-// const io = new Server(server);
-// app2.use(cors())
 
 // Define routes
 app.get('/', (req, res) => {
@@ -107,45 +101,18 @@ app.post('/post_new_chat', async (req,res)=>{
     });
     res.send({status:"ok"})
 })
-// Chat tcp connection
-// io.on('connection', (socket) => {
-//     console.log('A new client connected');
-  
-//     // Event listener for chat messages from clients
-//     // socket.on('chat message', (msg) => {
-//     //   console.log('Received message:', msg);
-  
-//     //   // Broadcast the message to all connected clients
-//     // //   io.emit('chat message', msg);
-//     // });
-  
-//     // Event listener for disconnection
-//     socket.on('disconnect', () => {
-//       console.log('A client disconnected');
-//     });
-//   });
-
-// INFO: example of a simple bd query
-// app.get('/get_users', async (req, res) => {
-//     res.send(await app.locals.db.query('select * from Users;'));
-// });
-
-
-
-
-
-
+app.post('/post_delete_chat', async (req,res)=>{
+    const {username,utoken,group_id} = req.body;
+    let query1 = await app.locals.db.query(`delete from Messages where group_id=${group_id};`);
+    let query2 = await app.locals.db.query(`delete from TGroupsMembers where group_id=${group_id};`);
+    let query3 = await app.locals.db.query(`delete from messages where group_id=${group_id};`);
+    res.send({status:"ok"})
+})
 
 // Start Express and then Start SQL
-const port = 5001;
+const port = 5000;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(config);
     (await import('./createTables.js')).default(app.locals.db);
     console.log(`Server is running on port ${port}`);
 });
-
-// Start TCP Server
-// server.listen(5001, ()=>{
-//     console.log(`WebSocket server listening on port 5001`);
-// })
-

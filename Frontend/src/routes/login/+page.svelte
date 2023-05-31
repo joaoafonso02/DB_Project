@@ -14,7 +14,7 @@
 			return;
 		}
 
-		let response = await fetch('http://localhost:5001/post_login', {
+		let response = await fetch('http://localhost:5000/post_login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -53,7 +53,7 @@
 			return;
 		}
 
-		let response = await fetch('http://localhost:5001/post_register', {
+		let response = await fetch('http://localhost:5000/post_register', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
