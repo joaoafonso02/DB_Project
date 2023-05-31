@@ -9,7 +9,7 @@
 
 		myUsername = localStorage.getItem('username');
 		// getChats
-		let resp = await fetch('http://localhost:5000/post_my_chats', {
+		let resp = await fetch('http://localhost:5001/post_my_chats', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -31,7 +31,7 @@
 	let current_group_id = -1;
 
 	async function refreshChat() {
-		let resp = await fetch('http://localhost:5000/post_my_messages', {
+		let resp = await fetch('http://localhost:5001/post_my_messages', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -76,7 +76,7 @@
 		if (textBoxValue == '') return;
 
 		// send message to bd
-		let resp = await fetch('http://localhost:5000/post_send_message', {
+		let resp = await fetch('http://localhost:5001/post_send_message', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -103,7 +103,7 @@
 	async function create_new_chat_submit() {
 		openAdd = true;
 		console.log(newChatTitle, newChatUsers.split(" "))
-		let resp = await fetch('http://localhost:5000/post_new_chat', {
+		let resp = await fetch('http://localhost:5001/post_new_chat', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -116,7 +116,7 @@
 			})
 		});
 		openAdd = false;
-		let resp2 = await fetch('http://localhost:5000/post_my_chats', {
+		let resp2 = await fetch('http://localhost:5001/post_my_chats', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

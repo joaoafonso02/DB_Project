@@ -155,7 +155,8 @@
 
 <div style="text-align: center;">
 	<button class="btn btn-dark"><a style="color: white;"href="/map">Start Trip</a></button>
-
+	<!-- Log out button-->
+	<button class="btn btn-danger"><a style="color: white;"href="/">Log Out</a></button>
 
 		<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" >
 			<div class="modal-dialog">

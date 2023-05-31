@@ -210,15 +210,42 @@
       starsContainer.appendChild(starLabel);
     }
 
+    // add text : "Need Another Ride?" with yes and no button bellow
+    let needAnotherRideText = document.createElement('div');
+    needAnotherRideText.classList.add('need-another-ride-text');
+    needAnotherRideText.innerHTML = 'Need Another Ride?';
+
+    let yesButton = document.createElement('button');
+    yesButton.classList.add('yes-button');
+    yesButton.classList.add('btn', 'btn-primary');
+    yesButton.innerHTML = 'Yes';
+
+    let noButton = document.createElement('button');
+    noButton.classList.add('no-button');
+    noButton.classList.add('btn', 'btn-danger');
+    noButton.style.marginLeft = '5px';
+    noButton.innerHTML = 'No';
+
     ratePopupContent.appendChild(rateTextContent);
     ratePopupContent.appendChild(starsContainer);
-    
+    ratePopupContent.appendChild(needAnotherRideText);
+    ratePopupContent.appendChild(yesButton);
+    ratePopupContent.appendChild(noButton);
 
     // Display rate popup
     let ratePopup = L.popup()
       .setLatLng(chosenTroti.getLatLng())
       .setContent(ratePopupContent)
       .openOn(map);
+
+    // remove popup onclick yes or no button
+    yesButton.addEventListener('click', function () {
+      ratePopup.remove();
+    });
+
+    noButton.addEventListener('click', function () {
+      ratePopup.remove();
+    });
 
     setTimeout(() => {
       ratePopup.remove();
