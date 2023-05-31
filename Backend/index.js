@@ -103,9 +103,7 @@ app.post('/post_new_chat', async (req,res)=>{
 })
 app.post('/post_delete_chat', async (req,res)=>{
     const {username,utoken,group_id} = req.body;
-    let query1 = await app.locals.db.query(`delete from Messages where group_id=${group_id};`);
-    let query2 = await app.locals.db.query(`delete from TGroupsMembers where group_id=${group_id};`);
-    let query3 = await app.locals.db.query(`delete from messages where group_id=${group_id};`);
+    let query1 = await app.locals.db.query(`delete from TGroups where group_id=${group_id};`);
     res.send({status:"ok"})
 })
 

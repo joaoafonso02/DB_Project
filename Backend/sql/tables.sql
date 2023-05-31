@@ -109,7 +109,8 @@ CREATE TABLE TGroups (
 CREATE TABLE TGroupsMembers (
   group_id INTEGER not null,
   user_id INTEGER not null
-  PRIMARY KEY (group_id, user_id)
+  PRIMARY KEY (group_id, user_id),
+  FOREIGN KEY (group_id) REFERENCES TGroups(group_id) ON DELETE CASCADE
 )
 
 
@@ -121,5 +122,5 @@ CREATE TABLE Messages (
   group_id INT NOT NULL,
   PRIMARY KEY (message_id),
   FOREIGN KEY (user_id) REFERENCES Users(id),
-  FOREIGN KEY (group_id) REFERENCES TGroups(group_id)
+  FOREIGN KEY (group_id) REFERENCES TGroups(group_id) ON DELETE CASCADE
 );
