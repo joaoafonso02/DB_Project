@@ -88,6 +88,7 @@ app.post('/post_profile_delete', async (req,res) => {
 /* CHAT ROUTES */
 app.post('/post_my_chats', async (req,res)=>{
     const {username,utoken} = req.body;
+    console.log(username,utoken)
     let query1 = await app.locals.db.query(`select Tgroups.group_name,Tgroups.group_id from (TGroups INNER JOIN TGroupsMembers ON Tgroups.group_id=TGroupsMembers.group_id) INNER JOIN UAuthentication on TGroupsMembers.user_id=UAuthentication.id where UAuthentication.username='${username}'`);
     let ret = [];
     for( let chat of query1.recordset ) {

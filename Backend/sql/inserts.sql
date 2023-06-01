@@ -275,7 +275,7 @@ VALUES
 --   ('The Illuminators', '2023-06-17'),
 --   ('The Explorers', '2023-06-18');
   
--- TGROUPSMEMBERS INSERTION  
+-- -- TGROUPSMEMBERS INSERTION  
 -- INSERT INTO TGroupsMembers (user_id, group_id)
 -- VALUES
 --   (1, 1),
@@ -311,25 +311,25 @@ VALUES
 
 
 
--- insert into TGroups (group_name) values
---   (''), -- empty string is used when group has two users
---   (''),
---   ('edu_afonso_admin'); -- this is just the name
+insert into TGroups (group_name) values
+  (''), -- empty string is used when group has two users
+  (''),
+  ('edu_afonso_admin'); -- this is just the name
 
--- insert into TGroupsMembers (group_id, user_id) VALUES
---   (1,1), -- group 1 -> admin
---   (1,2), -- group 1 -> edu
---   (2,1), -- group 2 -> admin
---   (2,3), -- group 2 -> afonso
---   (3,1), -- group 3 -> admin
---   (3,2), -- group 3 -> edu
---   (3,3); -- group 3 -> afonso
+insert into TGroupsMembers (group_id, user_id) VALUES
+  (1,1), -- group 1 -> admin
+  (1,2), -- group 1 -> edu
+  (2,1), -- group 2 -> admin
+  (2,3), -- group 2 -> afonso
+  (3,1), -- group 3 -> admin
+  (3,2), -- group 3 -> edu
+  (3,3); -- group 3 -> afonso
 
--- insert into Messages (msg_text,group_id,user_id) VALUES
---   ('ola',1,1),
---   ('entao',1,2),
---   ('ola123',3,1),
---   ('ola123',3,2),
---   ('ola123',3,3),
---   ('ola123',1,2);
+insert into Messages (msg_text,group_id,user_id) VALUES
+  ('ola',1,1),
+  ('entao',1,2),
+  ('ola123',3,1),
+  ('ola123',3,2),
+  ('ola123',3,3),
+  ('ola123',1,2);
 

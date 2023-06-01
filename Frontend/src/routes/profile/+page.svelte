@@ -77,19 +77,19 @@
 			<div class="name-client my-3">
 				<div><strong>Username: </strong>{user.username}</div>
 				{#if !editMode}
-					<div><strong>Name: </strong>{user.name}</div>
-					<div><strong>Phone: </strong>{user.phone}</div>
-					<div><strong>Email: </strong>{user.email}</div>
-					<div><strong>Postal Zip: </strong>{user.postalZip}</div>
-					<div><strong>Region: </strong>{user.region}</div>
-					<div><strong>Country: </strong>{user.country}</div>
+					<div class="my-1"><strong>Name: </strong>{user.name}</div>
+					<div class="my-1"><strong>Phone: </strong>{user.phone}</div>
+					<div class="my-1"><strong>Email: </strong>{user.email}</div>
+					<div class="my-1"><strong>Postal Zip: </strong>{user.postalZip}</div>
+					<div class="my-1"><strong>Region: </strong>{user.region}</div>
+					<div class="my-1"><strong>Country: </strong>{user.country}</div>
 				{:else}
-					<div><strong>Name: </strong><input bind:value={user.name} on:keypress={isEnter}/></div>
-					<div><strong>Phone: </strong><input bind:value={user.phone} on:keypress={isEnter}/></div>
-					<div><strong>Email: </strong><input bind:value={user.email} on:keypress={isEnter}/></div>
-					<div><strong>Postal Zip: </strong><input bind:value={user.postalZip} on:keypress={isEnter}/></div>
-					<div><strong>Region: </strong><input bind:value={user.region} on:keypress={isEnter}/></div>
-					<div><strong>Country: </strong><input bind:value={user.country} on:keypress={isEnter}/></div>
+					<div class="my-1"><strong>Name: </strong><input bind:value={user.name} on:keypress={isEnter}/></div>
+					<div class="my-1"><strong>Phone: </strong><input bind:value={user.phone} on:keypress={isEnter}/></div>
+					<div class="my-1"><strong>Email: </strong><input bind:value={user.email} on:keypress={isEnter}/></div>
+					<div class="my-1"><strong>Postal Zip: </strong><input bind:value={user.postalZip} on:keypress={isEnter}/></div>
+					<div class="my-1"><strong>Region: </strong><input bind:value={user.region} on:keypress={isEnter}/></div>
+					<div class="my-1"><strong>Country: </strong><input bind:value={user.country} on:keypress={isEnter}/></div>
 				{/if}
 			</div>
 			<div class="social-media" style="">
