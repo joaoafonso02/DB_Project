@@ -39,6 +39,18 @@ app.get('/', (req, res) => {
 //     res.send(await app.locals.db.query('select name from sys.databases;'));
 // });
 
+async function executeTrigger() {
+    try {
+      const pool = await sql.connect(config);
+      await pool.request().execute('HashPassword');
+      console.log('Trigger executed successfully.');
+    } catch (error) {
+      console.error('Error executing trigger:', error);
+    } finally {
+      sql.close();
+    }
+}
+
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req,res)=>{
     const { username, password } = req.body;
@@ -48,21 +60,37 @@ app.post('/post_login', async (req,res)=>{
     let query2 = await app.locals.db.query(`update UAuthentication set utoken='${token}' where id=${query1.recordsets[0][0].id}`);
     res.send({status:"ok",token});
 });
-app.post('/post_register', async (req,res)=>{
+
+app.post('/post_register', async (req, res) => {
     const { username, email, password } = req.body;
-    let query1 = await app.locals.db.query(`select Users.id from UAuthentication inner join Users on UAuthentication.id=Users.id where username='${username}' or email='${email}'; `);
-    if( query1.recordsets[0].length!=0 ) { res.send({status:'error', message:'Username or email already exist.'});return; }
-    let token = hat();
-    let query2 = await app.locals.db.query(`
-        BEGIN TRANSACTION;
-        DECLARE @GeneratedID INT;
-        INSERT INTO Users (email) VALUES ('${email}');
-        SET @GeneratedID = SCOPE_IDENTITY();
-        INSERT INTO UAuthentication (id, username, upass, utoken) VALUES (@GeneratedID, '${username}', '${password}', '${token}');
-        COMMIT;
-    `);
-    res.send({status:"ok",token});
+    try {
+        // Check if the username or email already exist
+        const checkQuery = `SELECT UAuthentication.id FROM UAuthentication INNER JOIN Users ON UAuthentication.id = Users.id WHERE username = '${username}' OR email = '${email}';`;
+        const checkResult = await app.locals.db.query(checkQuery);
+        if (checkResult.recordset.length > 0) {
+            res.send({ status: 'error', message: 'Username or email already exists.' });
+            return;
+        }
+
+        // Insert a new user into the Users table
+        const insertUserQuery = `INSERT INTO Users (email) VALUES ('${email}'); SELECT SCOPE_IDENTITY() AS userId;`;
+        const insertUserResult = await app.locals.db.query(insertUserQuery);
+        const userId = insertUserResult.recordset[0].userId;
+
+        // Insert the user authentication details into the UAuthentication table
+        const token = hat();
+        const insertAuthQuery = `INSERT INTO UAuthentication (id, username, upass, utoken) VALUES (${userId}, '${username}', '${password}', '${token}');`;
+        await app.locals.db.query(insertAuthQuery);
+
+        res.send({ status: 'ok', token });
+    } catch (error) {
+        console.error('Error registering user:', error);
+        res.send({ status: 'error', message: 'Failed to register user.' });
+    }
 });
+
+
+  
 
 /* USER PROFILE */
 app.post('/post_profile', async (req,res)=>{
@@ -190,5 +218,6 @@ const port = 5004;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(config);
     (await import('./createTables.js')).default(app.locals.db);
+    // execute HashPassword trigger
     console.log(`Server is running on port ${port}`);
 });
