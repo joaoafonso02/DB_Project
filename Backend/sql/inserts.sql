@@ -153,31 +153,31 @@ VALUES
     ('Troti 20', 'Troti in medium degraded state', 5, 214.70, 20);
 
 -- INSURANCE INSERTION
-INSERT INTO Insurance (idescription, idate, iprice, productId)
-VALUES
-    ('Travel insurance for adventurous trips', '2020-01-01', 159.99, 1),
-    ('Pet insurance for your furry companions', '2020-01-02', 199.50, 2),
-    ('Business insurance for comprehensive coverage', '2020-01-03', 549.75, 3),
-    ('Rental insurance for property protection', '2020-01-04', 249.25, 4),
-    ('Life insurance for financial security', '2020-01-05', 899.80, 5),
-    ('Event insurance for worry-free celebrations', '2020-01-06', 99.99, 6),
-    ('Medical insurance for peace of mind', '2020-01-07', 429.50, 7),
-    ('Gadget insurance for device protection', '2020-01-08', 179.25, 8),
-    ('Art insurance for valuable artwork', '2020-01-09', 679.80, 9),
-    ('Motorcycle insurance with comprehensive coverage', '2020-01-10', 319.99, 10);
+-- INSERT INTO Insurance (idescription, idate, iprice, productId)
+-- VALUES
+--     ('Travel insurance for adventurous trips', '2020-01-01', 159.99, 1),
+--     ('Pet insurance for your furry companions', '2020-01-02', 199.50, 2),
+--     ('Business insurance for comprehensive coverage', '2020-01-03', 549.75, 3),
+--     ('Rental insurance for property protection', '2020-01-04', 249.25, 4),
+--     ('Life insurance for financial security', '2020-01-05', 899.80, 5),
+--     ('Event insurance for worry-free celebrations', '2020-01-06', 99.99, 6),
+--     ('Medical insurance for peace of mind', '2020-01-07', 429.50, 7),
+--     ('Gadget insurance for device protection', '2020-01-08', 179.25, 8),
+--     ('Art insurance for valuable artwork', '2020-01-09', 679.80, 9),
+--     ('Motorcycle insurance with comprehensive coverage', '2020-01-10', 319.99, 10);
 
-INSERT INTO Insurance (idescription, idate, iprice, productId)
-VALUES
-    ('Crop insurance for agricultural protection', '2020-01-11', 499.50, 11),
-    ('Sports insurance for injury coverage', '2020-01-12', 129.75, 12),
-    ('Home insurance for property protection', '2020-01-13', 349.25, 13),
-    ('Car insurance for comprehensive coverage', '2020-01-14', 799.80, 14),
-    ('Travel insurance for adventurous trips', '2020-01-15', 159.99, 15),
-    ('Pet insurance for your furry companions', '2020-01-16', 199.50, 16),
-    ('Business insurance for comprehensive coverage', '2020-01-17', 549.75, 17),
-    ('Rental insurance for property protection', '2020-01-18', 249.25, 18),
-    ('Life insurance for financial security', '2020-01-19', 899.80, 19),
-    ('Event insurance for worry-free celebrations', '2020-01-20', 99.99, 20);
+-- INSERT INTO Insurance (idescription, idate, iprice, productId)
+-- VALUES
+--     ('Crop insurance for agricultural protection', '2020-01-11', 499.50, 11),
+--     ('Sports insurance for injury coverage', '2020-01-12', 129.75, 12),
+--     ('Home insurance for property protection', '2020-01-13', 349.25, 13),
+--     ('Car insurance for comprehensive coverage', '2020-01-14', 799.80, 14),
+--     ('Travel insurance for adventurous trips', '2020-01-15', 159.99, 15),
+--     ('Pet insurance for your furry companions', '2020-01-16', 199.50, 16),
+--     ('Business insurance for comprehensive coverage', '2020-01-17', 549.75, 17),
+--     ('Rental insurance for property protection', '2020-01-18', 249.25, 18),
+--     ('Life insurance for financial security', '2020-01-19', 899.80, 19),
+--     ('Event insurance for worry-free celebrations', '2020-01-20', 99.99, 20);
 
 -- PAYMENT INSERTION
 INSERT INTO Payment (pdescription, subtotal, pdate, productId)
@@ -228,28 +228,28 @@ VALUES
   ('Troti 20', 16.99, 20, 20, 369852741, 20);
 
 -- ALARM INSERTION
-INSERT INTO Alarm (alarm_name, alarm_description, alarm_date, alarm_time, product_id)
-VALUES
-  ('Sunrise Alarm', 'Wake up to a beautiful sunrise', '2023-05-30', '06:30:00', 1),
-  ('Coffee Break Reminder', 'Take a break and enjoy a cup of coffee', '2023-05-31', '10:30:00', 2),
-  ('Stretching Time', 'Time to stretch and relax your muscles', '2023-06-01', '14:00:00', 3),
-  ('Productivity Booster', 'Boost your productivity with a quick task', '2023-06-02', '11:00:00', 4),
-  ('Creative Inspiration', 'Get inspired by exploring new ideas', '2023-06-03', '15:30:00', 5),
-  ('Healthy Snack Time', 'Grab a nutritious snack for energy', '2023-06-04', '16:30:00', 6),
-  ('Nature Walk Reminder', 'Take a walk and enjoy the beauty of nature', '2023-06-05', '18:00:00', 7),
-  ('Mindful Meditation', 'Practice mindfulness and find inner peace', '2023-06-06', '08:00:00', 8),
-  ('Fun Exercise Break', 'Get moving with a fun exercise routine', '2023-06-07', '17:00:00', 9),
-  ('Book Reading Time', 'Dive into a captivating book', '2023-06-08', '19:30:00', 10),
-  ('Music Break', 'Listen to your favorite tunes and relax', '2023-06-09', '13:00:00', 11),
-  ('Brain Teaser Challenge', 'Sharpen your mind with a brain teaser', '2023-06-10', '16:00:00', 12),
-  ('Product Launch Countdown', 'Exciting new product launch coming soon', '2023-06-11', '09:30:00', 13),
-  ('Positive Affirmation', 'Remind yourself of your strengths and goals', '2023-06-12', '07:30:00', 14),
-  ('Artistic Inspiration', 'Find inspiration in art and unleash your creativity', '2023-06-13', '12:30:00', 15),
-  ('Healthy Lunch Reminder', 'Fuel your body with a nutritious lunch', '2023-06-14', '13:30:00', 16),
-  ('Goal Review Time', 'Reflect on your goals and progress', '2023-06-15', '16:30:00', 17),
-  ('Relaxing Nature Sounds', 'Take a moment to relax with soothing nature sounds', '2023-06-16', '20:00:00', 18),
-  ('Inspiring Podcast Break', 'Listen to an inspiring podcast episode', '2023-06-17', '11:30:00', 19),
-  ('Evening Reflection', 'Reflect on your day and practice gratitude', '2023-06-18', '21:00:00', 20);
+-- INSERT INTO Alarm (alarm_name, alarm_description, alarm_date, alarm_time, product_id)
+-- VALUES
+--   ('Sunrise Alarm', 'Wake up to a beautiful sunrise', '2023-05-30', '06:30:00', 1),
+--   ('Coffee Break Reminder', 'Take a break and enjoy a cup of coffee', '2023-05-31', '10:30:00', 2),
+--   ('Stretching Time', 'Time to stretch and relax your muscles', '2023-06-01', '14:00:00', 3),
+--   ('Productivity Booster', 'Boost your productivity with a quick task', '2023-06-02', '11:00:00', 4),
+--   ('Creative Inspiration', 'Get inspired by exploring new ideas', '2023-06-03', '15:30:00', 5),
+--   ('Healthy Snack Time', 'Grab a nutritious snack for energy', '2023-06-04', '16:30:00', 6),
+--   ('Nature Walk Reminder', 'Take a walk and enjoy the beauty of nature', '2023-06-05', '18:00:00', 7),
+--   ('Mindful Meditation', 'Practice mindfulness and find inner peace', '2023-06-06', '08:00:00', 8),
+--   ('Fun Exercise Break', 'Get moving with a fun exercise routine', '2023-06-07', '17:00:00', 9),
+--   ('Book Reading Time', 'Dive into a captivating book', '2023-06-08', '19:30:00', 10),
+--   ('Music Break', 'Listen to your favorite tunes and relax', '2023-06-09', '13:00:00', 11),
+--   ('Brain Teaser Challenge', 'Sharpen your mind with a brain teaser', '2023-06-10', '16:00:00', 12),
+--   ('Product Launch Countdown', 'Exciting new product launch coming soon', '2023-06-11', '09:30:00', 13),
+--   ('Positive Affirmation', 'Remind yourself of your strengths and goals', '2023-06-12', '07:30:00', 14),
+--   ('Artistic Inspiration', 'Find inspiration in art and unleash your creativity', '2023-06-13', '12:30:00', 15),
+--   ('Healthy Lunch Reminder', 'Fuel your body with a nutritious lunch', '2023-06-14', '13:30:00', 16),
+--   ('Goal Review Time', 'Reflect on your goals and progress', '2023-06-15', '16:30:00', 17),
+--   ('Relaxing Nature Sounds', 'Take a moment to relax with soothing nature sounds', '2023-06-16', '20:00:00', 18),
+--   ('Inspiring Podcast Break', 'Listen to an inspiring podcast episode', '2023-06-17', '11:30:00', 19),
+--   ('Evening Reflection', 'Reflect on your day and practice gratitude', '2023-06-18', '21:00:00', 20);
 
 -- TGROUPS INSERTION
 -- INSERT INTO TGroups (group_name, created_at)

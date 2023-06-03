@@ -16,7 +16,14 @@
 -- FORCE DROP TABLES AND CONSTRAINTS
 -- DROP PROCEDURE IF EXISTS InsertUserWithAuthentication;
 DROP PROCEDURE IF EXISTS FilterChats;
-DROP TRIGGER IF EXISTS HashPassword;
+
+-- DROP TRIGGER IF EXISTS HashPassword;
+DROP TRIGGER IF EXISTS UpdateTrotiAvailability;
+
+-- DROP TABLE IF EXISTS Troti;
+DROP TABLE IF EXISTS TrotiRentals;
+DROP VIEW IF EXISTS UsersWithAuthentication;
+DROP PROCEDURE IF EXISTS AvailableTrotis;
 -- DROP TABLE IF EXISTS Users;
 -- DROP TABLE IF EXISTS UAuthentication;
 -- DROP TABLE IF EXISTS Orders;
@@ -32,6 +39,9 @@ DROP TRIGGER IF EXISTS HashPassword;
 
 -- -- DROP VIEW IF EXISTS UsersWithAuthentication;
 -- DROP PROCEDURE IF EXISTS GetUsers;
+
+
+
 
 
 

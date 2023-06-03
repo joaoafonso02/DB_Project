@@ -53,30 +53,37 @@ async function executeTrigger() {
 
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req, res) => {
-    const { username, password } = req.body;
+  const { username, password } = req.body;
 
-    let query1 = await app.locals.db.query(
-      `SELECT id, upass FROM UAuthentication WHERE username = '${username}'`
-    );
-    if (query1.recordset.length !== 1) {
+  try {
+    // Retrieve the hashed password for the given username
+    const query = `SELECT id, upass FROM UAuthentication WHERE username = '${username}'`;
+    const result = await app.locals.db.query(query);
+    if (result.recordset.length !== 1) {
       res.send({ status: 'error', message: 'Wrong username or password.' });
       return;
     }
-  
-    let user = query1.recordset[0];
-    let hashedPassword = user.upass;
-    if (password !== hashedPassword) {
+
+    const user = result.recordset[0];
+    const hashedPassword = user.upass;
+
+    // Compare the provided password with the hashed password
+    if (!comparePassword(password, hashedPassword)) {
       res.send({ status: 'error', message: 'Wrong username or password.' });
       return;
     }
-  
-    let token = hat();
-    let query2 = await app.locals.db.query( // useless
-      `UPDATE UAuthentication SET utoken = '${token}' WHERE id = ${user.id}`
-    );
-  
+
+    const token = hat();
+    const updateQuery = `UPDATE UAuthentication SET utoken = '${token}' WHERE id = ${user.id}`;
+    await app.locals.db.query(updateQuery);
+
     res.send({ status: 'ok', token });
-  });
+  } catch (error) {
+        console.error('Error logging in:', error);
+        res.send({ status: 'error', message: 'Failed to log in.' });
+  }
+});
+
 
 app.post('/post_register', async (req, res) => {
     let { username, email, password } = req.body;
@@ -168,24 +175,24 @@ app.post('/post_new_chat', async (req, res) => {
     let result = await app.locals.db.query(insertQuery);
     
     if (result.recordset && result.recordset.length > 0) {
-      let groupId = result.recordset[0].id;
-    
-      // Insert into TGroupsMembers for each username
-      for (let e of usernames) {
-        let userQuery = `SELECT id FROM UAuthentication WHERE username = '${e}'`;
-        let userResult = await app.locals.db.query(userQuery);
+        let groupId = result.recordset[0].id;
         
-        if (userResult.recordset && userResult.recordset.length > 0) {
-          let userId = userResult.recordset[0].id;
-          
-          let groupMemberQuery = `INSERT INTO TGroupsMembers (group_id, user_id) VALUES (${groupId}, ${userId})`;
-          await app.locals.db.query(groupMemberQuery);
+        // Insert into TGroupsMembers for each username
+        for (let e of usernames) {
+            let userQuery = `SELECT id FROM UAuthentication WHERE username = '${e}'`;
+            let userResult = await app.locals.db.query(userQuery);
+            
+            if (userResult.recordset && userResult.recordset.length > 0) {
+            let userId = userResult.recordset[0].id;
+            
+            let groupMemberQuery = `INSERT INTO TGroupsMembers (group_id, user_id) VALUES (${groupId}, ${userId})`;
+            await app.locals.db.query(groupMemberQuery);
+            }
         }
-      }
     
-      res.send({ status: "ok" });
+        res.send({ status: "ok" });
     } else {
-      res.send({ status: "error", message: "Failed to create group." });
+        res.send({ status: "error", message: "Failed to create group." });
     }
   });
   
@@ -201,21 +208,38 @@ app.post('/post_filter_chats_sql', async (req, res) => {
     let { username, utoken, searchInput } = req.body;
   
     try {
-      let request = new sql.Request(app.locals.db);
-      request.input('username', sql.NVarChar, username);
-      request.input('searchInput', sql.NVarChar, searchInput);
+        let request = new sql.Request(app.locals.db);
+        request.input('username', sql.NVarChar, username);
+        request.input('searchInput', sql.NVarChar, searchInput);
   
-      let result = await request.execute('FilterChats');
-      let filteredChats = result.recordset;
-      res.send(filteredChats);
+        let result = await request.execute('FilterChats');
+        let filteredChats = result.recordset;
+        res.send(filteredChats);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
+        console.error(error);
+        res.status(500).send('Internal Server Error');
     }
-  });
+});
+
+// get trotis attributes
+app.post('/post_trotis', async (req, res) => {
+    try {
+        const { trotiId, trotiBattery, insurance_id, alarm_id, availability_status, trotiLat, trotiLng } = req.body;
   
-  
-  
+        console.log(`Troti attributes received successfully! Battery: Id=${trotiId},  ${trotiBattery}%, Insurance: ${insurance_id}, Alarm: ${alarm_id}, Availability: ${availability_status}, Location: ${trotiLat}, ${trotiLng}`);
+
+        const insertQuery = `INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong) 
+                            VALUES (${trotiBattery}, ${insurance_id}, ${alarm_id}, '${availability_status}', ${trotiLat}, ${trotiLng})`;
+        await app.locals.db.query(insertQuery);
+
+        res.send({ status: "ok" }); // Send a response indicating successful insertion
+
+    } catch (error) {
+        // Handle any errors that occurred during processing
+        console.error('Error receiving Troti attributes:', error);
+        res.status(500).json({ error: 'An error occurred while receiving Troti attributes' });
+    }
+});
 
 app.post('/post_usernames', async (req, res) => {
     try {

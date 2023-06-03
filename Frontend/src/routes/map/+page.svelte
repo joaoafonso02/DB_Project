@@ -94,10 +94,15 @@
 
  
 
-    function createTrotis(icon, lat, lng, count) {
+    async function createTrotis(icon, lat, lng, count) {
       for (let i = 0; i < count; i++) {
         let troti = L.marker([lat + Math.random() / 800, lng + Math.random() / 200], { icon: icon }).addTo(map);
         let trotiBattery = Math.floor(Math.random() * 100);
+        let insurance_id = Math.floor(Math.random() * (1000 - 40 + 1) + 40);
+        let troti_id = Math.floor(Math.random() * 10000) + 50;
+        // from 40 to 1000
+        let alarm_id = Math.floor(Math.random() * (1000 - 40 + 1) + 40);
+        let availability_status = "available";
         troti.bindPopup('Troti #' + trotiNumber + '<br>' + getBatteryIcon(trotiBattery) + " " + trotiBattery + '%');
         troti.openPopup();
         trotiNumber++;
@@ -108,8 +113,36 @@
           message = 'Choose Destination';
           showAlert(message);
         });
+
+        // Send Troti attributes to the backend
+        sendTrotiAttributes(troti_id + 40, trotiBattery, insurance_id, alarm_id, availability_status, lat, lng);
       }
     }
+
+    async function  sendTrotiAttributes(troti_id, trotiBattery, insurance_id, alarm_id, availability_status, lat, lng) {
+      try {
+        let resp = await fetch('http://localhost:5004/post_trotis', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            trotiId: troti_id,
+            trotiBattery: trotiBattery,
+            insurance_id: insurance_id,
+            alarm_id: alarm_id,
+            availability_status: availability_status,
+            trotiLat: lat,
+            trotiLng: lng
+          })
+        });
+        let data = await resp.json();
+        console.log(data);
+      } catch (error) {
+        console.error('Error sending Troti attributes:', error);
+      }
+    }
+
 
     createTrotis(trotiIcon, 40.6339, -8.6599, 9);
     createTrotis(trotiIcon, 40.6433, -8.6401, 8);

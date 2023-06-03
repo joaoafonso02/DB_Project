@@ -29,7 +29,6 @@
 -- 	FOREIGN KEY (users_id) REFERENCES Users(id)
 -- );
 
--- /* drop TABLE Inventory; */
 -- CREATE TABLE Inventory (
 -- 	id INTEGER NOT NULL IDENTITY(1, 1),
 -- 	iname VARCHAR(255) NOT NULL,
@@ -124,3 +123,23 @@
 --   FOREIGN KEY (user_id) REFERENCES Users(id),
 --   FOREIGN KEY (group_id) REFERENCES TGroups(group_id) ON DELETE CASCADE
 -- );
+
+-- CREATE TABLE Troti (
+--   id INT NOT NULL IDENTITY(1, 1) ,
+--   battery INT NOT NULL,
+--   insurance_id INT NOT NULL,
+--   alarm_id INT NOT NULL,
+--   availability_status VARCHAR(32) NOT NULL,
+--   trotiLat FLOAT NOT NULL,
+--   trotiLong FLOAT NOT NULL,
+--   PRIMARY KEY (id),
+-- );
+
+CREATE TABLE TrotiRentals (
+  id INT NOT NULL IDENTITY(1, 1),
+  troti_id INT NOT NULL,
+  rental_date DATETIME NOT NULL,
+  return_date DATETIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (troti_id) REFERENCES Troti(id)
+);
