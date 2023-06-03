@@ -3,26 +3,27 @@ import sql from 'mssql';
 import cors from 'cors';
 import hat from 'hat';
 
-const config = {
-    server: 'localhost',
-    port: 1433,
-    user: 'SA',
-    password: '<batata@BD>',
-    database: 'TrotiNet',
-    options: {
-        trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
-    },
-};
 // const config = {
-//     server: 'mednat.ieeta.pt',
-//     port: 8101,
-//     user: 'p1g7',
-//     password: 'batata@BD',
-//     database: 'p1g7',
+//     server: 'localhost',
+//     port: 1433,
+//     user: 'SA',
+//     password: '<batata@BD>',
+//     database: 'TrotiNet',
 //     options: {
 //         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
 //     },
 // };
+
+const config = {
+    server: 'mednat.ieeta.pt',
+    port: 8101,
+    user: 'p1g7',
+    password: 'batata@BD',
+    database: 'p1g7',
+    options: {
+        trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
+    },
+};
 
 // Create an instance of Express
 const app = express();
@@ -115,23 +116,77 @@ app.post('/post_send_message', async (req,res)=>{
     let query2 = await app.locals.db.query(`insert into Messages (msg_text,group_id,user_id) values ('${msg_text}',${group_id},${id})`);
     res.send({})
 })
-app.post('/post_new_chat', async (req,res)=>{
-    const {username,utoken,title,usernames} = req.body;
-    let query1 = await app.locals.db.query(`INSERT INTO TGroups (group_name) VALUES ('${title}');select SCOPE_IDENTITY() as id;`);
-    usernames.forEach(async e => {
-        let query2 = await app.locals.db.query(`select id from UAuthentication where username='${e}'`)
-        let query3 = await app.locals.db.query(`insert into TGroupsMembers (group_id, user_id) VALUES (${query1.recordset[0].id}, ${query2.recordset[0].id})`)
-    });
-    res.send({status:"ok"})
-})
+
+app.post('/post_new_chat', async (req, res) => {
+    const { username, utoken, title, usernames } = req.body;
+    
+    // Insert into TGroups and retrieve the group_id
+    const insertQuery = `INSERT INTO TGroups (group_name) VALUES ('${title}'); SELECT SCOPE_IDENTITY() AS id;`;
+    const result = await app.locals.db.query(insertQuery);
+    
+    if (result.recordset && result.recordset.length > 0) {
+      const groupId = result.recordset[0].id;
+    
+      // Insert into TGroupsMembers for each username
+      for (const e of usernames) {
+        const userQuery = `SELECT id FROM UAuthentication WHERE username = '${e}'`;
+        const userResult = await app.locals.db.query(userQuery);
+        
+        if (userResult.recordset && userResult.recordset.length > 0) {
+          const userId = userResult.recordset[0].id;
+          
+          const groupMemberQuery = `INSERT INTO TGroupsMembers (group_id, user_id) VALUES (${groupId}, ${userId})`;
+          await app.locals.db.query(groupMemberQuery);
+        }
+      }
+    
+      res.send({ status: "ok" });
+    } else {
+      res.send({ status: "error", message: "Failed to create group." });
+    }
+  });
+  
+  
+
 app.post('/post_delete_chat', async (req,res)=>{
     const {username,utoken,group_id} = req.body;
     let query1 = await app.locals.db.query(`delete from TGroups where group_id=${group_id};`);
     res.send({status:"ok"})
 })
 
+app.post('/post_filter_chats_sql', async (req, res) => {
+    const { username, utoken, searchInput } = req.body;
+  
+    try {
+      const request = new sql.Request(app.locals.db);
+      request.input('username', sql.NVarChar, username);
+      request.input('searchInput', sql.NVarChar, searchInput);
+  
+      const result = await request.execute('FilterChats');
+      const filteredChats = result.recordset;
+      res.send(filteredChats);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+  
+  
+
+app.post('/post_usernames', async (req, res) => {
+    try {
+      const query1 = await app.locals.db.query('GetUsers'); // Execute the stored procedure
+      const usernames = query1.recordset.map(record => record.name); // Extract the usernames from the result
+      res.send(usernames);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+});
+
 // Start Express and then Start SQL
-const port = 5000;
+const port = 5004;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(config);
     (await import('./createTables.js')).default(app.locals.db);

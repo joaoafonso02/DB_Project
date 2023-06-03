@@ -314,7 +314,8 @@ VALUES
 insert into TGroups (group_name) values
   (''), -- empty string is used when group has two users
   (''),
-  ('edu_afonso_admin'); -- this is just the name
+  ('edu_afonso_admin'), -- this is just the name
+  ('chat_group');
 
 insert into TGroupsMembers (group_id, user_id) VALUES
   (1,1), -- group 1 -> admin

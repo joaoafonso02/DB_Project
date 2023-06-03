@@ -4,12 +4,17 @@
 	let messagesBox;
 	let myUsername = '';
 	let chats = [];
+	let searchInput = ''; 
+	let usernames = [];
+	let filteredChats = [];
+
+
 	onMount(async () => {
 		// if(openChat) messagesBox.scroll({ top: messagesBox.scrollHeight, behavior: 'smooth' });
 
 		myUsername = localStorage.getItem('username');
 		// getChats
-		let resp = await fetch('http://localhost:5000/post_my_chats', {
+		let resp = await fetch('http://localhost:5004/post_my_chats', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -20,7 +25,11 @@
 			})
 		});
 		chats = await resp.json();
+
+		fetchChats();
 	});
+
+
 	let openChat = false;
 	let chatName = 'test';
 
@@ -31,7 +40,7 @@
 	let current_group_id = -1;
 
 	async function refreshChat() {
-		let resp = await fetch('http://localhost:5000/post_my_messages', {
+		let resp = await fetch('http://localhost:5004/post_my_messages', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -76,7 +85,7 @@
 		if (textBoxValue == '') return;
 
 		// send message to bd
-		let resp = await fetch('http://localhost:5000/post_send_message', {
+		let resp = await fetch('http://localhost:5004/post_send_message', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -102,7 +111,7 @@
 	}
 
 	async function fetchChats() {
-		let resp2 = await fetch('http://localhost:5000/post_my_chats', {
+		let resp2 = await fetch('http://localhost:5004/post_my_chats', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -117,7 +126,7 @@
 	async function create_new_chat_submit() {
 		openAdd = true;
 		console.log(newChatTitle, newChatUsers.split(" "))
-		let resp = await fetch('http://localhost:5000/post_new_chat', {
+		let resp = await fetch('http://localhost:5004/post_new_chat', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -135,7 +144,7 @@
 
 	async function delete_chat(event, group_id) {
 		event.stopPropagation();
-		let resp2 = await fetch('http://localhost:5000/post_delete_chat', {
+		let resp2 = await fetch('http://localhost:5004/post_delete_chat', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -148,6 +157,52 @@
 		});
 		fetchChats();
 	}
+
+	// async function fetchUsernames() {
+	// 	try {
+	// 		const resp = await fetch('http://localhost:5004/post_usernames', {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json'
+	// 		},
+	// 		body: JSON.stringify({
+	// 			utoken: localStorage.getItem('utoken')
+	// 		})
+	// 		});
+
+	// 		const usernames = await resp.json();
+	// 		return usernames;
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 		return [];
+	// 	}
+	// }
+
+	// async function searchUsernames() {
+	// 	// Filter the usernames based on the search input
+	// 	return usernames.filter(username => username.includes(searchInput));
+	// }
+
+	async function filterChats() {
+		if (searchInput === '') {
+			filteredChats = chats;
+		} else {
+			let resp = await fetch('http://localhost:5004/post_filter_chats_sql', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username: localStorage.getItem('username'),
+				utoken: localStorage.getItem('utoken'),
+				searchInput: searchInput
+			})
+		});
+
+		filteredChats = await resp.json();
+		}
+	}
+
 
 </script>
 
@@ -166,25 +221,87 @@
 				<i class="fa fa-plus" style="font-size:1.5rem;" />
 			</button>
 		</div>
-		<div style="margin-top:50px;">
-			<div class="list-group">
-				{#if chats.length}
-					{#each chats as chat}
-						<button id="chatButton"
-							on:click={openChatAction(event, chat.group_id)}
-							class="position-relative list-group-item list-group-item-action rounded-0">
-								{chat.group_name}
-								<button on:click={delete_chat(event, chat.group_id)} id="chatDeleteButton" class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0" style="">
-									<i class="fa fa-trash " />
-								</button>
-								<span id="chatSpanButton" class="position-absolute w-100 h-100 top-0 start-0"></span>
-							</button
-						>
-					{/each}
-				{:else}
-					<div class="text-center my-5">Loading Your Chats...</div>
-				{/if}
+		<div style="margin-top:70px;">
+			<div class="input-group input-group-sm" style="margin-left:5%;text-align:center;width: 90%">
+				<span class="input-group-text" id="basic-addon1">
+				  <i class="fa fa-search" />
+				</span>
+				<!-- <input
+					type="text"
+					class="form-control"
+					placeholder="User Search"
+					aria-label="Search"
+					aria-describedby="basic-addon1"
+					bind:value={searchInput}
+					on:input={fetchUsernames}
+					/> -->
+					<input type="text" bind:value={searchInput} on:input={filterChats} placeholder="Search chats" />
+
+				<!-- Dropdown with usernames -->
+				<!-- <div class="dropdown">
+					<button
+					  class="btn btn-outline-secondary dropdown-toggle"
+					  type="button"
+					  id="dropdownMenuButton"
+					  data-bs-toggle="dropdown"
+					  aria-expanded="false"
+					>
+					  <i class="fa fa-filter"></i>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					  {#each searchUsernames() as username}
+					  <li>
+						<a class="dropdown-item" href="#" on:click={() => searchInput = username}>{username}</a>
+					  </li>
+					  {/each}
+					</ul>
+				  </div> -->
+				  
 			</div>
+				  
+			<div class="list-group mt-3">
+				{#if filteredChats.length}
+				  {#each filteredChats as chat}
+					<button
+					  id="chatButton"
+					  on:click={openChatAction(event, chat.group_id)}
+					  class="position-relative list-group-item list-group-item-action rounded-0"
+					>
+					  {chat.group_name}
+					  <button
+						on:click={delete_chat(event, chat.group_id)}
+						id="chatDeleteButton"
+						class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0"
+						style=""
+					  >
+						<i class="fa fa-trash " />
+					  </button>
+					  <span id="chatSpanButton" class="position-absolute w-100 h-100 top-0 start-0"></span>
+					</button>
+				  {/each}
+				{:else if chats.length}
+				  {#each chats as chat}
+					<button
+					  id="chatButton"
+					  on:click={openChatAction(event, chat.group_id)}
+					  class="position-relative list-group-item list-group-item-action rounded-0"
+					>
+					  {chat.group_name}
+					  <button
+						on:click={delete_chat(event, chat.group_id)}
+						id="chatDeleteButton"
+						class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0"
+						style=""
+					  >
+						<i class="fa fa-trash " />
+					  </button>
+					  <span id="chatSpanButton" class="position-absolute w-100 h-100 top-0 start-0"></span>
+					</button>
+				  {/each}
+				{:else}
+				  <div class="text-center my-5">Loading Your Chats...</div>
+				{/if}
+			  </div>
 		</div>
 	</div>
 {:else if openChat}
