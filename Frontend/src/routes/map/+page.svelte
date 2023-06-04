@@ -50,6 +50,15 @@
       popupAnchor: [0, -50]
     });
 
+    let unavailableIcon = L.icon({
+      iconUrl: '/unavailable.png',
+      iconSize: [40, 40],
+      iconAnchor: [25, 50],
+      popupAnchor: [0, -50]
+    });
+
+    getTrotis(trotiIcon)
+
     let destinationIcon = L.icon({
       iconUrl: '/destination.jpeg',
       iconSize: [50, 50],
@@ -86,7 +95,7 @@
     };
     
 
-    map = L.map('map').setView([40.6339, -8.6599], 16);
+    map = L.map('map').setView([40.6339, -8.6469], 15);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -94,58 +103,98 @@
 
  
 
-    async function createTrotis(icon, lat, lng, count) {
-      for (let i = 0; i < count; i++) {
-        let troti = L.marker([lat + Math.random() / 800, lng + Math.random() / 200], { icon: icon }).addTo(map);
-        let trotiBattery = Math.floor(Math.random() * 100);
-        let insurance_id = Math.floor(Math.random() * (1000 - 40 + 1) + 40);
-        let troti_id = Math.floor(Math.random() * 10000) + 50;
-        // from 40 to 1000
-        let alarm_id = Math.floor(Math.random() * (1000 - 40 + 1) + 40);
-        let availability_status = "available";
-        troti.bindPopup('Troti #' + trotiNumber + '<br>' + getBatteryIcon(trotiBattery) + " " + trotiBattery + '%');
-        troti.openPopup();
-        trotiNumber++;
-
-        troti.on('click', function () {
-          chosenTroti = troti;
-          console.log('Chosen Troti:', trotiNumber);
-          message = 'Choose Destination';
-          showAlert(message);
-        });
-
-        // Send Troti attributes to the backend
-        sendTrotiAttributes(troti_id + 40, trotiBattery, insurance_id, alarm_id, availability_status, lat, lng);
-      }
-    }
-
-    async function  sendTrotiAttributes(troti_id, trotiBattery, insurance_id, alarm_id, availability_status, lat, lng) {
+    async function getTrotis(icon) {
       try {
-        let resp = await fetch('http://localhost:5004/post_trotis', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            trotiId: troti_id,
-            trotiBattery: trotiBattery,
-            insurance_id: insurance_id,
-            alarm_id: alarm_id,
-            availability_status: availability_status,
-            trotiLat: lat,
-            trotiLng: lng
-          })
+        const response = await fetch('http://localhost:5004/get_trotis');
+        const trotis = await response.json();
+
+        trotis.forEach((troti) => {
+          let lat = troti.trotiLat;
+          let lng = troti.trotiLong;
+          const trotiMarker = L.marker([lat, lng], { icon: icon }).addTo(map);
+
+          // Customize the marker properties based on troti attributes
+          const trotiBattery = troti.battery;
+          const trotiNumber = troti.id;
+          let trotiStatus = troti.availability_status;
+
+          trotiMarker.bindPopup(
+            `Troti #${trotiNumber}<br>${trotiStatus}<br>${getBatteryIcon(trotiBattery)} ${trotiBattery}%`
+          );
+          trotiMarker.openPopup();
+
+          trotiMarker.trotiId = trotiNumber;
+
+          trotiMarker.on('click', function () {
+            chosenTroti = trotiMarker;
+            console.log('Chosen Troti:', trotiMarker.trotiId);
+            const message = 'Choose Destination';
+            showAlert(message);
+          });
+
         });
-        let data = await resp.json();
-        console.log(data);
       } catch (error) {
-        console.error('Error sending Troti attributes:', error);
+        console.error('Error creating trotis:', error);
       }
     }
 
+    // async function createTrotis(icon, lat, lng, count) {
+    //   for (let i = 0; i < count; i++) {
+    //     let troti = L.marker([lat + Math.random() / 600, lng + Math.random() / 200], { icon: icon }).addTo(map);
+    //     let trotiBattery = Math.floor(Math.random() * 100);
+    //     let insurance_id = Math.floor(Math.random() * (1000 - 40 + 1) + 40);
+    //     let troti_id = Math.floor(Math.random() * 10000) + 50;
+    //     // from 40 to 1000
+    //     let alarm_id = Math.floor(Math.random() * (1000 - 40 + 1) + 40);
+    //     let availability_status = "available";
+    //     troti.bindPopup('Troti #' + trotiNumber + '<br>' + getBatteryIcon(trotiBattery) + " " + trotiBattery + '%');
+    //     troti.openPopup();
+    //     trotiNumber++;
 
-    createTrotis(trotiIcon, 40.6339, -8.6599, 9);
-    createTrotis(trotiIcon, 40.6433, -8.6401, 8);
+    //     troti.on('click', function () {
+    //       chosenTroti = troti;
+    //       console.log('Chosen Troti:', trotiNumber);
+    //       message = 'Choose Destination';
+    //       showAlert(message);
+    //     });
+
+    //     // Send Troti attributes to the backend
+    //     sendTrotiAttributes(troti_id + 40, trotiBattery, insurance_id, alarm_id, availability_status, lat, lng);
+    //   }
+    // }
+
+
+    // async function  sendTrotiAttributes(troti_id, trotiBattery, insurance_id, alarm_id, availability_status, lat, lng) {
+    //   try {
+    //     let resp = await fetch('http://localhost:5004/post_trotis', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({
+    //         trotiId: troti_id,
+    //         trotiBattery: trotiBattery,
+    //         insurance_id: insurance_id,
+    //         alarm_id: alarm_id,
+    //         availability_status: availability_status,
+    //         trotiLat: lat,
+    //         trotiLng: lng
+    //       })
+    //     });
+    //     let data = await resp.json();
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.error('Error sending Troti attributes:', error);
+    //   }
+    // }
+
+
+    // createTrotis(trotiIcon, 40.6339, -8.6579, 9);
+    // createTrotis(trotiIcon, 40.6339, -8.6580, 2);
+    // createTrotis(trotiIcon, 40.6339, -8.6580, 2);
+    // createTrotis(trotiIcon, 40.6339, -8.6581, 2);
+
+    
 
 
     L.marker([40.633202429864595, -8.6593], { icon: userIcon }).addTo(map)
@@ -166,12 +215,13 @@
     // remove leflet control zoom
     map.removeControl(map.zoomControl);
 
-    confirmButton.addEventListener('click', function () {
-      simulateConfirmButtonClick();
+    confirmButton.addEventListener('click', async function () {
+        await getTrotis(trotiIcon);
+        simulateConfirmButtonClick();
     }); 
 
    
-    function simulateConfirmButtonClick() {
+    async function simulateConfirmButtonClick() {
       tripStarted = true;
       console.log('Trip started');
       paidTrip = true;
@@ -180,94 +230,131 @@
       QRmodal.style.display = "none";
       message = 'Trip just started! Have a nice ride!';
 
-      
-      setTimeout(() => {
-        message = "";
-        tripisOver = true;
-        endTripButton.style.display = 'block';
-      }, 3000);
+      // Get Troti ID and destination
+      const response = await fetch('http://localhost:5004/get_trotis');
+      const trotis = await response.json();
 
-      if (destinationMarker) {
-        // change destination marker icon
-        destinationMarker.setIcon(destinationIcon);
-        let popupContent = document.createElement('div');
-        popupContent.style.textAlign = 'center';
-        popupContent.style.fontSize = '15px';
-        popupContent.innerHTML = 'Your Destination';
+      let destination = destinationMarker.getLatLng();
+      console.log('Troti ID: ', chosenTroti.trotiId);
 
-        destinationMarker.bindPopup(popupContent);
-        destinationMarker.openPopup();
+      // Make an AJAX request to your backend endpoint to insert values
+      fetch('http://localhost:5004/confirm_destination', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              trotiId: chosenTroti.trotiId,
+              destination: destination,
+          }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Confirmation inserted successfully:', data);
+          chosenTroti.setIcon(unavailableIcon);
+          chosenTroti.closePopup();
+          chosenTroti.unbindPopup();
+          chosenTroti.off('click');
+          chosenTroti.on('click', function () {
+              console.log('Troti is unavailable!');
+          });
+
+          unavailableIcon.options.riseOnHover = true;
+          chosenTroti.setZIndexOffset(1000);
+      })
+      .catch(error => {
+          console.error('Error inserting confirmation:', error);
+      });
+
+
+        
+        setTimeout(() => {
+          message = "";
+          tripisOver = true;
+          endTripButton.style.display = 'block';
+        }, 3000);
+
+        if (destinationMarker) {
+          // change destination marker icon
+          destinationMarker.setIcon(destinationIcon);
+          let popupContent = document.createElement('div');
+          popupContent.style.textAlign = 'center';
+          popupContent.style.fontSize = '15px';
+          popupContent.innerHTML = 'Your Destination';
+
+          destinationMarker.bindPopup(popupContent);
+          destinationMarker.openPopup();
+        }
       }
-    }
 
-    cancelbutton.addEventListener('click', function () {
-      modal.style.display = "none";
-      QRmodal.style.display = "none";
+      cancelbutton.addEventListener('click', function () {
+        modal.style.display = "none";
+        QRmodal.style.display = "none";
     });
 
     if (endTripButton) {
-  endTripButton.addEventListener('click', function () {
-    console.log('Trip ended');
-    paidTrip = false;
-    choosingDestination = true;
-    tripisOver = false;
-    endTripButton.style.display = 'none';
-    message = 'Trip is over!';
+      endTripButton.addEventListener('click', function () {
+        console.log('Trip ended');
+        paidTrip = false;
+        choosingDestination = true;
+        tripisOver = false;
+        endTripButton.style.display = 'none';
+        message = 'Trip is over!';
 
-    // Create rate popup
-    let rateTextContent = document.createElement('div');
-    rateTextContent.classList.add('rate-text');
-    rateTextContent.innerHTML = 'Rate your trip:';
-    rateTextContent.style.textAlign = 'center';
-    rateTextContent.style.fontSize = '15px';
-    rateTextContent.style.color = '#ff9d22';
+        // Create rate popup
+        let rateTextContent = document.createElement('div');
+        rateTextContent.classList.add('rate-text');
+        rateTextContent.innerHTML = 'Rate your trip:';
+        rateTextContent.style.textAlign = 'center';
+        rateTextContent.style.fontSize = '15px';
+        rateTextContent.style.color = '#ff9d22';
 
 
-    let ratePopupContent = document.createElement('div');
-    ratePopupContent.classList.add('rate-popup');
+        let ratePopupContent = document.createElement('div');
+        ratePopupContent.classList.add('rate-popup');
 
-    let starsContainer = document.createElement('div');
-    starsContainer.classList.add('stars-container');
+        let starsContainer = document.createElement('div');
+        starsContainer.classList.add('stars-container');
 
-    for (let i = 1; i <= 5; i++) {
-      let starInput = document.createElement('input');
-      starInput.type = 'radio';
-      starInput.name = 'rating';
-      starInput.value = i;
+        for (let i = 1; i <= 5; i++) {
+          let starInput = document.createElement('input');
+          starInput.type = 'radio';
+          starInput.name = 'rating';
+          starInput.value = i;
 
-      let starLabel = document.createElement('label');
-      starLabel.htmlFor = 'rating-' + i;
-      starLabel.classList.add('star');
+          let starLabel = document.createElement('label');
+          starLabel.htmlFor = 'rating-' + i;
+          starLabel.classList.add('star');
 
-      starsContainer.appendChild(starInput);
-      starsContainer.appendChild(starLabel);
-    }
+          starsContainer.appendChild(starInput);
+          starsContainer.appendChild(starLabel);
+        }
 
-    ratePopupContent.appendChild(rateTextContent);
-    ratePopupContent.appendChild(starsContainer);
-    
+        ratePopupContent.appendChild(rateTextContent);
+        ratePopupContent.appendChild(starsContainer);
+        
 
-    // Display rate popup
-    let ratePopup = L.popup()
-      .setLatLng(chosenTroti.getLatLng())
-      .setContent(ratePopupContent)
-      .openOn(map);
+        // Display rate popup
+        let ratePopup = L.popup()
+          .setLatLng(chosenTroti.getLatLng())
+          .setContent(ratePopupContent)
+          .openOn(map);
 
-    setTimeout(() => {
-      ratePopup.remove();
-      setTimeout(() => {
-        message = 'Choose Troti';
-      }, 3000);
-    }, 5000);
+        setTimeout(() => {
+          ratePopup.remove();
+          setTimeout(() => {
+            message = 'Choose Troti';
+          }, 3000);
+        }, 5000);
 
-    if (destinationMarker) {
-      map.removeLayer(destinationMarker);
-    }
-    if (chosenTroti) {
-      chosenTroti.closePopup();
-    }
-  });
-}
+        if (destinationMarker) {
+          map.removeLayer(destinationMarker);
+        }
+        if (chosenTroti) {
+          chosenTroti.closePopup();
+        }
+      });
+    } 
 
 
     // QRCODE CONFIRM BUTTON
@@ -283,6 +370,15 @@
     });
 
 
+    function toggleSearchBar() {
+      var searchContainer = document.querySelector(".search-container");
+
+      if (searchContainer.style.display === "none") {
+        searchContainer.style.display = "block";
+      } else {
+        searchContainer.style.display = "none";
+      }
+    }
 
     
     
@@ -294,6 +390,7 @@
         destinationMarker = L.marker(e.latlng).addTo(map);
 
         if (chosenTroti) {
+          console.log(chosenTroti.options.trotiId)
           let trotiLatLng = chosenTroti.getLatLng();
           let distance = trotiLatLng.distanceTo(e.latlng);
           message = 'Destination: ' + distance.toFixed(0) + ' meters';
@@ -339,13 +436,19 @@
 
 <div class="position-relative h-100 w-100">
   <h1 id="mapElements" style="text-align:center;">
-    <i class="fa fa-user" style="position: absolute; left: 2vh; cursor: pointer;" on:click={() => (window.location.href = '/profile')}></i>
+    <i class="fa fa-user" style="position: absolute; left: 2vh; cursor: pointer;" onclick="goToProfile()"></i>
+    <i class="fa fa-search" style="position: absolute; left: 7vh; cursor: pointer;" onclick="toggleSearchBar()"></i>
     {title}
-    <i class="fa fa-users" style="position: absolute; right: 7vh; cursor: pointer;" on:click={() => (window.location.href = '/chat')}></i> 
+    <i class="fa fa-users" style="position: absolute; right: 7vh; cursor: pointer;" onclick="goToChat()"></i> 
     <i class="fa fa-qrcode" style="position: absolute; right: 2vh; cursor: pointer;" id="QRCodeModal" ></i>
     <div id="openModal" style="display:none"></div>
   </h1>
   <div id="map" style="height: calc(100%);"></div>
+  <div class="search-container" style="display: none;">
+    <input type="text" id="trotiIdInput" placeholder="Enter Troti ID" />
+    <button onclick="searchTroti()">Search</button>
+  </div>
+
  
   <div id="destinationContainer" class="destination-container">
     {#if message}
@@ -358,8 +461,10 @@
   <div id="confirmContainer" class="confirm-container">
     <button on:click="{() => choosingDestination = false}" class="confirm-button" id="confirm" style="display:none">Confirm</button>
   </div>
+
   
 </div>
+
 
 <div id="QRCode" class="modal">
   <div class="modal-content center">

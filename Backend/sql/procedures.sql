@@ -5,18 +5,30 @@
 -- END;
 -- Create a procedure to filter group_name from TGroups
 
-CREATE PROCEDURE FilterChats
-  @username NVARCHAR(50),
-  @searchInput NVARCHAR(100)
-AS
-BEGIN
-  SELECT Tgroups.group_name, Tgroups.group_id
-  FROM TGroups
-  INNER JOIN TGroupsMembers ON Tgroups.group_id = TGroupsMembers.group_id
-  INNER JOIN UAuthentication ON TGroupsMembers.user_id = UAuthentication.id
-  WHERE UAuthentication.username = @username
-  AND Tgroups.group_name LIKE '%' + @searchInput + '%'
-END
+-- CREATE PROCEDURE FilterChats
+--   @username NVARCHAR(50),
+--   @searchInput NVARCHAR(100)
+-- AS
+-- BEGIN
+--   SELECT Tgroups.group_name, Tgroups.group_id
+--   FROM TGroups
+--   INNER JOIN TGroupsMembers ON Tgroups.group_id = TGroupsMembers.group_id
+--   INNER JOIN UAuthentication ON TGroupsMembers.user_id = UAuthentication.id
+--   WHERE UAuthentication.username = @username
+--   AND Tgroups.group_name LIKE '%' + @searchInput + '%'
+-- END
+
+
+-- CREATE PROCEDURE UpdateTrotiStatus
+--   @troti_id INT,
+--   @availability_status VARCHAR(50) 
+-- AS
+-- BEGIN
+--   UPDATE Troti
+--   SET availability_status = @availability_status 
+--   WHERE id = @troti_id
+-- END
+
 
 
 

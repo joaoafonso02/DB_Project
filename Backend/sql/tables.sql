@@ -143,3 +143,11 @@ CREATE TABLE TrotiRentals (
   PRIMARY KEY (id),
   FOREIGN KEY (troti_id) REFERENCES Troti(id)
 );
+
+-- CREATE TABLE ConfirmationTable (
+--   id INT IDENTITY(1,1) PRIMARY KEY,
+--   troti_id INT,
+--   destination VARCHAR(255),
+--   confirmed_at DATETIME
+-- );
+

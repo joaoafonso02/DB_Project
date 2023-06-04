@@ -241,6 +241,56 @@ app.post('/post_trotis', async (req, res) => {
     }
 });
 
+async function getTrotis() {
+    try {
+      const query = "SELECT * FROM Troti";
+      const result = await app.locals.db.query(query);
+      return result.recordset;
+    } catch (error) {
+      console.error("Error retrieving trotis:", error);
+      throw error;
+    }
+}
+  
+  // Define a route to handle the frontend's request for trotis
+app.get("/get_trotis", async (req, res) => {
+    try {
+      const trotis = await getTrotis();
+      res.send(trotis);
+    } catch (error) {
+      console.error("Error handling troti request:", error);
+      res.status(500).send("Internal Server Error");
+    }
+}); 
+
+// condirm destination and update troti status
+app.post('/confirm_destination', async (req, res) => {
+    try {
+        const { trotiId, destination } = req.body;
+
+        if (trotiId === undefined || destination === undefined) {
+            throw new Error('Invalid request body');
+        }
+
+        // Convert destination object to a string representation
+        const destinationString = JSON.stringify(destination);
+
+        // Insert values into ConfirmationTable using a prepared statement or stored procedure
+        const query = `INSERT INTO ConfirmationTable (troti_id, destination, confirmed_at) VALUES (${trotiId}, '${destinationString}', GETDATE())`;
+        await app.locals.db.query(query);
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error inserting confirmation:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
+
+
+
 app.post('/post_usernames', async (req, res) => {
     try {
       let query1 = await app.locals.db.query('GetUsers'); // Execute the stored procedure

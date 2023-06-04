@@ -11,18 +11,17 @@
 --     INNER JOIN inserted ON U.id = inserted.id;
 -- END;
 
-CREATE TRIGGER UpdateTrotiAvailability
-ON TrotiRentals
-AFTER INSERT, UPDATE, DELETE
-AS
-BEGIN
-  SET NOCOUNT ON;
+-- CREATE TRIGGER TrotiConfirmationTrigger -- Executes SP UpdateTrotiStatus
+-- ON ConfirmationTable  
+-- AFTER INSERT
+-- AS
+-- BEGIN
+--   DECLARE @troti_id INT
+--   DECLARE @availability_status VARCHAR(50) 
 
-  UPDATE Troti
-  SET availability_status = CASE
-    WHEN TrotiRentals.troti_id IS NULL THEN 'Available'
-    ELSE 'Rented'
-  END
-  FROM Troti
-  LEFT JOIN TrotiRentals ON Troti.id = TrotiRentals.troti_id;
-END;
+--   SELECT @troti_id = troti_id,
+--          @availability_status = 'unavailable'
+--   FROM inserted
+
+--   EXEC UpdateTrotiStatus @troti_id, @availability_status 
+-- END
