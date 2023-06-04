@@ -70,8 +70,7 @@ VALUES
 INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
   (1,'admin','admin','token'),
   (2,'edu','edu','token'),
-  (3,'afonso','afonso','token'),
-  (4,'miraNieves','miranocu','token');
+  (3,'afonso','afonso','token');
 
 -- Supplier Insertion
 INSERT INTO Supplier (nif, sname, phone, email, saddress, postalZip, country)
