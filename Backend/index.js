@@ -51,12 +51,18 @@ async function executeTrigger() {
     }
 }
 
+function comparePassword(password, hashedPassword) {
+    // Add your password comparison logic here
+    // For example, you can use a library like bcrypt
+    return password === hashedPassword;
+  
+}
+
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Retrieve the hashed password for the given username
     const query = `SELECT id, upass FROM UAuthentication WHERE username = '${username}'`;
     const result = await app.locals.db.query(query);
     if (result.recordset.length !== 1) {
@@ -67,7 +73,6 @@ app.post('/post_login', async (req, res) => {
     const user = result.recordset[0];
     const hashedPassword = user.upass;
 
-    // Compare the provided password with the hashed password
     if (!comparePassword(password, hashedPassword)) {
       res.send({ status: 'error', message: 'Wrong username or password.' });
       return;
@@ -110,9 +115,6 @@ app.post('/post_register', async (req, res) => {
         res.send({ status: 'error', message: 'Failed to register user.' });
     }
 });
-
-
-  
 
 /* USER PROFILE */
 app.post('/post_profile', async (req,res)=>{
@@ -307,6 +309,5 @@ let port = 5004;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(config);
     (await import('./createTables.js')).default(app.locals.db);
-    // execute HashPassword trigger
     console.log(`Server is running on port ${port}`);
 });
