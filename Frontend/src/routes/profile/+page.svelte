@@ -5,7 +5,7 @@
 	let editMode = false;
 	let user;
 	onMount(async ()=>{
-		let resp = await fetch("http://localhost:5000/post_profile", {
+		let resp = await fetch("http://localhost:5004/post_profile", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -23,7 +23,7 @@
 	async function toogle_editMode() { 
 		editMode = !editMode
 		if( !editMode ) {
-			let resp = await fetch("http://localhost:5000/post_profile_edit", {
+			let resp = await fetch("http://localhost:5004/post_profile_edit", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -45,7 +45,7 @@
 	}
 
 	async function deleteAccount() {
-		let resp = await fetch("http://localhost:5000/post_profile_delete", {
+		let resp = await fetch("http://localhost:5004/post_profile_delete", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
