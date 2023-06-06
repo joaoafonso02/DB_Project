@@ -66,91 +66,120 @@ VALUES
   ('Lane Mcmahon','1-281-468-7193','eleifend.nunc@outlook.couk','65108-128','Luxemburg','Germany');
 
 
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (90, 123, 456, 'available', 40.6339, -8.6579);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (75, 789, 101112, 'available', 40.6339, -8.6580);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (80, 131415, 161718, 'available', 40.6343, -8.6580);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (35, 192021, 222324, 'available', 40.6338, -8.6571);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (20, 252627, 282930, 'available', 40.6340, -8.6584);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (15, 313233, 343536, 'available', 40.6434, -8.6406);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (5, 313233, 343536, 'available', 40.6424, -8.6426);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (10, 313233, 343536, 'available', 40.6428, -8.6416);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (70, 252627, 282930, 'available', 40.6347, -8.6574);
+
+INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+VALUES (60, 131415, 161718, 'available', 40.6343, -8.6580);
 -- Authentication insert
-INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
-  (1,'admin','admin','token'),
-  (2,'edu','edu','token'),
-  (3,'afonso','afonso','token'),
-  (4,'miraNieves','miranocu','token');
+-- INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
+--   (1,'admin','admin','token'),
+--   (2,'edu','edu','token'),
+--   (3,'afonso','afonso','token'),
+--   (4,'miraNieves','miranocu','token');
 
 -- Supplier Insertion
-INSERT INTO Supplier (nif, sname, phone, email, saddress, postalZip, country)
-VALUES
-    (123456799, 'John Doe Suppliers', '123-456-7890', 'john.doe.suppliers@example.com', '123 Main Street', '12345', 'United States'),
-    (987654321, 'Jane Smith Suppliers', '987-654-3210', 'jane.smith.suppliers@example.com', '456 Elm Street', '54321', 'United Kingdom'),
-    (456789123, 'Michael Johnson Suppliers', '456-789-1230', 'michael.johnson.suppliers@example.com', '789 Oak Street', '98765', 'Canada'),
-    (321654987, 'Emily Brown Suppliers', '321-654-9870', 'emily.brown.suppliers@example.com', '987 Pine Street', '56789', 'Australia'),
-    (654123987, 'Daniel Wilson Suppliers', '654-123-9870', 'daniel.wilson.suppliers@example.com', '654 Maple Street', '67890', 'Germany'),
-    (789456123, 'Sophia Taylor Suppliers', '789-456-1230', 'sophia.taylor.suppliers@example.com', '321 Cedar Street', '45678', 'France'),
-    (852963741, 'Oliver Anderson Suppliers', '852-963-7410', 'oliver.anderson.suppliers@example.com', '159 Walnut Street', '34567', 'Spain'),
-    (963852741, 'Emma Martinez Suppliers', '963-852-7410', 'emma.martinez.suppliers@example.com', '753 Birch Street', '23456', 'Italy'),
-    (741852963, 'Jacob Thompson Suppliers', '741-852-9630', 'jacob.thompson.suppliers@example.com', '258 Ash Street', '12345', 'Brazil'),
-    (258963147, 'Isabella Davis Suppliers', '258-963-1470', 'isabella.davis.suppliers@example.com', '852 Sycamore Street', '01234', 'Japan'),
-    (147258369, 'William Wilson Suppliers', '147-258-3690', 'william.wilson.suppliers@example.com', '369 Oak Street', '98765', 'Canada'),
-    (369258147, 'Ava Thompson Suppliers', '369-258-1470', 'ava.thompson.suppliers@example.com', '741 Cedar Street', '45678', 'France'),
-    (852741963, 'James Martinez Suppliers', '852-741-9630', 'james.martinez.suppliers@example.com', '963 Birch Street', '23456', 'Italy'),
-    (741963852, 'Sophia Thompson Suppliers', '741-963-8520', 'sophia.thompson.suppliers@example.com', '852 Ash Street', '12345', 'Brazil'),
-    (369741852, 'Alexander Davis Suppliers', '369-741-8520', 'alexander.davis.suppliers@example.com', '741 Sycamore Street', '01234', 'Japan'),
-    (258147369, 'Mia Anderson Suppliers', '258-147-3690', 'mia.anderson.suppliers@example.com', '369 Walnut Street', '34567', 'Spain'),
-    (147963852, 'Lucas Wilson Suppliers', '147-963-8520', 'lucas.wilson.suppliers@example.com', '852 Elm Street', '54321', 'United Kingdom'),
-    (963741852, 'Harper Thompson Suppliers', '963-741-8520', 'harper.thompson.suppliers@example.com', '741 Pine Street', '56789', 'Australia'),
-    (852369147, 'Benjamin Martinez Suppliers', '852-369-1470', 'benjamin.martinez.suppliers@example.com', '147 Cedar Street', '45678', 'France'),
-    (369852741, 'Evelyn Davis Suppliers', '369-852-7410', 'evelyn.davis.suppliers@example.com', '963 Sycamore Street', '23456', 'Italy');
+-- INSERT INTO Supplier (nif, sname, phone, email, saddress, postalZip, country)
+-- VALUES
+--     (123456799, 'John Doe Suppliers', '123-456-7890', 'john.doe.suppliers@example.com', '123 Main Street', '12345', 'United States'),
+--     (987654321, 'Jane Smith Suppliers', '987-654-3210', 'jane.smith.suppliers@example.com', '456 Elm Street', '54321', 'United Kingdom'),
+--     (456789123, 'Michael Johnson Suppliers', '456-789-1230', 'michael.johnson.suppliers@example.com', '789 Oak Street', '98765', 'Canada'),
+--     (321654987, 'Emily Brown Suppliers', '321-654-9870', 'emily.brown.suppliers@example.com', '987 Pine Street', '56789', 'Australia'),
+--     (654123987, 'Daniel Wilson Suppliers', '654-123-9870', 'daniel.wilson.suppliers@example.com', '654 Maple Street', '67890', 'Germany'),
+--     (789456123, 'Sophia Taylor Suppliers', '789-456-1230', 'sophia.taylor.suppliers@example.com', '321 Cedar Street', '45678', 'France'),
+--     (852963741, 'Oliver Anderson Suppliers', '852-963-7410', 'oliver.anderson.suppliers@example.com', '159 Walnut Street', '34567', 'Spain'),
+--     (963852741, 'Emma Martinez Suppliers', '963-852-7410', 'emma.martinez.suppliers@example.com', '753 Birch Street', '23456', 'Italy'),
+--     (741852963, 'Jacob Thompson Suppliers', '741-852-9630', 'jacob.thompson.suppliers@example.com', '258 Ash Street', '12345', 'Brazil'),
+--     (258963147, 'Isabella Davis Suppliers', '258-963-1470', 'isabella.davis.suppliers@example.com', '852 Sycamore Street', '01234', 'Japan'),
+--     (147258369, 'William Wilson Suppliers', '147-258-3690', 'william.wilson.suppliers@example.com', '369 Oak Street', '98765', 'Canada'),
+--     (369258147, 'Ava Thompson Suppliers', '369-258-1470', 'ava.thompson.suppliers@example.com', '741 Cedar Street', '45678', 'France'),
+--     (852741963, 'James Martinez Suppliers', '852-741-9630', 'james.martinez.suppliers@example.com', '963 Birch Street', '23456', 'Italy'),
+--     (741963852, 'Sophia Thompson Suppliers', '741-963-8520', 'sophia.thompson.suppliers@example.com', '852 Ash Street', '12345', 'Brazil'),
+--     (369741852, 'Alexander Davis Suppliers', '369-741-8520', 'alexander.davis.suppliers@example.com', '741 Sycamore Street', '01234', 'Japan'),
+--     (258147369, 'Mia Anderson Suppliers', '258-147-3690', 'mia.anderson.suppliers@example.com', '369 Walnut Street', '34567', 'Spain'),
+--     (147963852, 'Lucas Wilson Suppliers', '147-963-8520', 'lucas.wilson.suppliers@example.com', '852 Elm Street', '54321', 'United Kingdom'),
+--     (963741852, 'Harper Thompson Suppliers', '963-741-8520', 'harper.thompson.suppliers@example.com', '741 Pine Street', '56789', 'Australia'),
+--     (852369147, 'Benjamin Martinez Suppliers', '852-369-1470', 'benjamin.martinez.suppliers@example.com', '147 Cedar Street', '45678', 'France'),
+--     (369852741, 'Evelyn Davis Suppliers', '369-852-7410', 'evelyn.davis.suppliers@example.com', '963 Sycamore Street', '23456', 'Italy');
 
 
 -- Orders Insertion
-INSERT INTO Orders (oname, price, quantity, odate, users_id)
-VALUES
-    ('Order 1', 100.00, 1, '2020-01-01', 1),
-    ('Order 2', 200.00, 2, '2020-02-02', 2),
-    ('Order 3', 300.00, 3, '2020-03-03', 3),
-    ('Order 4', 400.00, 4, '2020-04-04', 4),
-    ('Order 5', 500.00, 5, '2020-05-05', 5),
-    ('Order 6', 600.00, 6, '2020-06-06', 6),
-    ('Order 7', 700.00, 7, '2020-07-07', 7),
-    ('Order 8', 800.00, 8, '2020-08-08', 8),
-    ('Order 9', 900.00, 9, '2020-09-09', 9),
-    ('Order 10', 1000.00, 10, '2020-10-10', 10);
+-- INSERT INTO Orders (oname, price, quantity, odate, users_id)
+-- VALUES
+--     ('Order 1', 100.00, 1, '2020-01-01', 1),
+--     ('Order 2', 200.00, 2, '2020-02-02', 2),
+--     ('Order 3', 300.00, 3, '2020-03-03', 3),
+--     ('Order 4', 400.00, 4, '2020-04-04', 4),
+--     ('Order 5', 500.00, 5, '2020-05-05', 5),
+--     ('Order 6', 600.00, 6, '2020-06-06', 6),
+--     ('Order 7', 700.00, 7, '2020-07-07', 7),
+--     ('Order 8', 800.00, 8, '2020-08-08', 8),
+--     ('Order 9', 900.00, 9, '2020-09-09', 9),
+--     ('Order 10', 1000.00, 10, '2020-10-10', 10);
 
-INSERT INTO Orders (oname, price, quantity, odate, users_id)
-VALUES
-    ('Unique Order', 123.76, 1, '2023-05-29', 11),
-    ('Special Order', 456.89, 2, '2023-05-29', 12),
-    ('Exclusive Order', 789.12, 3, '2023-05-29', 13),
-    ('Premium Order', 321.54, 4, '2023-05-29', 14),
-    ('Deluxe Order', 654.87, 5, '2023-05-29', 15),
-    ('Premium Order', 777.77, 3, '2023-05-29', 16),
-    ('Exclusive Order', 999.99, 2, '2023-05-29', 17),
-    ('Special Order', 555.55, 4, '2023-05-29', 18),
-    ('Unique Order', 888.88, 1, '2023-05-29', 19),
-    ('Deluxe Order', 666.66, 5, '2023-05-29', 20);
+-- INSERT INTO Orders (oname, price, quantity, odate, users_id)
+-- VALUES
+--     ('Unique Order', 123.76, 1, '2023-05-29', 11),
+--     ('Special Order', 456.89, 2, '2023-05-29', 12),
+--     ('Exclusive Order', 789.12, 3, '2023-05-29', 13),
+--     ('Premium Order', 321.54, 4, '2023-05-29', 14),
+--     ('Deluxe Order', 654.87, 5, '2023-05-29', 15),
+--     ('Premium Order', 777.77, 3, '2023-05-29', 16),
+--     ('Exclusive Order', 999.99, 2, '2023-05-29', 17),
+--     ('Special Order', 555.55, 4, '2023-05-29', 18),
+--     ('Unique Order', 888.88, 1, '2023-05-29', 19),
+--     ('Deluxe Order', 666.66, 5, '2023-05-29', 20);
 
 -- INVENTORY INSERTION
-INSERT INTO Inventory (iname, idescription, stock, cost, order_id)
-VALUES
-    ('Troti 1', 'Description 1', 10, 50.00, 1),
-    ('Troti 2', 'Description 2', 5, 20.00, 2),
-    ('Troti 3', 'Description 3', 15, 30.00, 3),
-    ('Troti 4', 'Description 4', 20, 40.00, 4),
-    ('Troti 5', 'Description 5', 8, 15.00, 5),
-    ('Troti 6', 'Troti in perfect condition', 10, 200.25, 6),
-    ('Troti 7', 'Troti slightly degraded', 5, 201.50, 7),
-    ('Troti 8', 'Troti in medium degraded state', 8, 199.75, 8),
-    ('Troti 9', 'Troti in need of revision', 3, 198.80, 9),
-    ('Troti 10', 'Troti in perfect condition', 12, 203.10, 10);
+-- INSERT INTO Inventory (iname, idescription, stock, cost, order_id)
+-- VALUES
+--     ('Troti 1', 'Description 1', 10, 50.00, 1),
+--     ('Troti 2', 'Description 2', 5, 20.00, 2),
+--     ('Troti 3', 'Description 3', 15, 30.00, 3),
+--     ('Troti 4', 'Description 4', 20, 40.00, 4),
+--     ('Troti 5', 'Description 5', 8, 15.00, 5),
+--     ('Troti 6', 'Troti in perfect condition', 10, 200.25, 6),
+--     ('Troti 7', 'Troti slightly degraded', 5, 201.50, 7),
+--     ('Troti 8', 'Troti in medium degraded state', 8, 199.75, 8),
+--     ('Troti 9', 'Troti in need of revision', 3, 198.80, 9),
+--     ('Troti 10', 'Troti in perfect condition', 12, 203.10, 10);
 
-INSERT INTO Inventory (iname, idescription, stock, cost, order_id)
-VALUES
-    ('Troti 11', 'Troti slightly degraded', 6, 197.35, 11),
-    ('Troti 12', 'Troti in medium degraded state', 9, 204.70, 12),
-    ('Troti 13', 'Troti in need of revision', 2, 206.15, 13),
-    ('Troti 14', 'Troti in perfect condition', 7, 195.90, 14),
-    ('Troti 15', 'Troti slightly degraded', 4, 208.45, 15),
-    ('Troti 16', 'Troti in medium degraded state', 11, 193.60, 16),
-    ('Troti 17', 'Troti in need of revision', 6, 210.80, 17),
-    ('Troti 18', 'Troti in perfect condition', 3, 212.25, 18),
-    ('Troti 19', 'Troti slightly degraded', 8, 191.40, 19),
-    ('Troti 20', 'Troti in medium degraded state', 5, 214.70, 20);
+-- INSERT INTO Inventory (iname, idescription, stock, cost, order_id)
+-- VALUES
+--     ('Troti 11', 'Troti slightly degraded', 6, 197.35, 11),
+--     ('Troti 12', 'Troti in medium degraded state', 9, 204.70, 12),
+--     ('Troti 13', 'Troti in need of revision', 2, 206.15, 13),
+--     ('Troti 14', 'Troti in perfect condition', 7, 195.90, 14),
+--     ('Troti 15', 'Troti slightly degraded', 4, 208.45, 15),
+--     ('Troti 16', 'Troti in medium degraded state', 11, 193.60, 16),
+--     ('Troti 17', 'Troti in need of revision', 6, 210.80, 17),
+--     ('Troti 18', 'Troti in perfect condition', 3, 212.25, 18),
+--     ('Troti 19', 'Troti slightly degraded', 8, 191.40, 19),
+--     ('Troti 20', 'Troti in medium degraded state', 5, 214.70, 20);
 
 -- INSURANCE INSERTION
 -- INSERT INTO Insurance (idescription, idate, iprice, productId)
@@ -179,53 +208,53 @@ VALUES
 --     ('Life insurance for financial security', '2020-01-19', 899.80, 19),
 --     ('Event insurance for worry-free celebrations', '2020-01-20', 99.99, 20);
 
--- PAYMENT INSERTION
-INSERT INTO Payment (pdescription, subtotal, pdate, productId)
-VALUES
-    ('Payment for service', 99.50, '2013-01-01', 1),
-    ('Online purchase payment', 199.75, '2013-02-02', 2),
-    ('Subscription payment', 299.25, '2013-03-03', 3),
-    ('Payment for product', 399.80, '2013-04-04', 4),
-    ('Membership fee payment', 49.99, '2013-05-05', 5),
-    ('Payment for maintenance', 149.50, '2013-06-06', 6),
-    ('Donation payment', 99.75, '2013-07-07', 7),
-    ('Service fee payment', 249.25, '2013-08-08', 8),
-    ('Payment for consultation', 399.80, '2013-09-09', 9),
-    ('Rent payment', 199.99, '2013-10-10', 10),
-    ('Payment for subscription', 129.50, '2013-11-11', 11),
-    ('Product purchase payment', 349.75, '2013-12-12', 12),
-    ('Payment for maintenance', 449.25, '2014-01-13', 13),
-    ('Donation payment', 99.80, '2014-02-14', 14),
-    ('Service fee payment', 149.99, '2014-03-15', 15),
-    ('Payment for consultation', 299.50, '2014-04-16', 16),
-    ('Rent payment', 399.75, '2014-05-17', 17),
-    ('Payment for subscription', 49.25, '2014-06-18', 18),
-    ('Product purchase payment', 99.80, '2014-07-19', 19),
-    ('Payment for maintenance', 199.99, '2014-08-20', 20);
+-- -- PAYMENT INSERTION
+-- INSERT INTO Payment (pdescription, subtotal, pdate, productId)
+-- VALUES
+--     ('Payment for service', 99.50, '2013-01-01', 1),
+--     ('Online purchase payment', 199.75, '2013-02-02', 2),
+--     ('Subscription payment', 299.25, '2013-03-03', 3),
+--     ('Payment for product', 399.80, '2013-04-04', 4),
+--     ('Membership fee payment', 49.99, '2013-05-05', 5),
+--     ('Payment for maintenance', 149.50, '2013-06-06', 6),
+--     ('Donation payment', 99.75, '2013-07-07', 7),
+--     ('Service fee payment', 249.25, '2013-08-08', 8),
+--     ('Payment for consultation', 399.80, '2013-09-09', 9),
+--     ('Rent payment', 199.99, '2013-10-10', 10),
+--     ('Payment for subscription', 129.50, '2013-11-11', 11),
+--     ('Product purchase payment', 349.75, '2013-12-12', 12),
+--     ('Payment for maintenance', 449.25, '2014-01-13', 13),
+--     ('Donation payment', 99.80, '2014-02-14', 14),
+--     ('Service fee payment', 149.99, '2014-03-15', 15),
+--     ('Payment for consultation', 299.50, '2014-04-16', 16),
+--     ('Rent payment', 399.75, '2014-05-17', 17),
+--     ('Payment for subscription', 49.25, '2014-06-18', 18),
+--     ('Product purchase payment', 99.80, '2014-07-19', 19),
+--     ('Payment for maintenance', 199.99, '2014-08-20', 20);
 
--- PRODUCT INSERTION
-INSERT INTO Product (pname, price, insurance_id, orders_id, supplier_nif, payment_id)
-VALUES
-  ('Troti #53634', 10.99, 1, 1, 123456799, 1),
-  ('Troti 2', 19.99, 2, 2, 987654321, 2),
-  ('Troti 3', 15.99, 3, 3, 456789123, 3),
-  ('Troti 4', 12.99, 4, 4, 321654987, 4),
-  ('Troti 5', 9.99, 5, 5, 654123987, 5),
-  ('Troti 6', 14.99, 6, 6, 789456123, 6),
-  ('Troti 7', 11.99, 7, 7, 852963741, 7),
-  ('Troti 8', 17.99, 8, 8, 963852741, 8),
-  ('Troti 9', 13.99, 9, 9, 741852963, 9),
-  ('Troti 10', 16.99, 10, 10, 258963147, 10),
-  ('Troti 11', 10.99, 11, 11, 147258369, 11),
-  ('Troti 12', 19.99, 12, 12, 369258147, 12),
-  ('Troti 13', 15.99, 13, 13, 852741963, 13),
-  ('Troti 14', 12.99, 14, 14, 741963852, 14),
-  ('Troti 15', 9.99, 15, 15, 369741852, 15),
-  ('Troti 16', 14.99, 16, 16, 258147369, 16),
-  ('Troti 17', 11.99, 17, 17, 147963852, 17),
-  ('Troti 18', 17.99, 18, 18, 963741852, 18),
-  ('Troti 19', 13.99, 19, 19, 852369147, 19),
-  ('Troti 20', 16.99, 20, 20, 369852741, 20);
+-- -- PRODUCT INSERTION
+-- INSERT INTO Product (pname, price, insurance_id, orders_id, supplier_nif, payment_id)
+-- VALUES
+--   ('Troti #53634', 10.99, 1, 1, 123456799, 1),
+--   ('Troti 2', 19.99, 2, 2, 987654321, 2),
+--   ('Troti 3', 15.99, 3, 3, 456789123, 3),
+--   ('Troti 4', 12.99, 4, 4, 321654987, 4),
+--   ('Troti 5', 9.99, 5, 5, 654123987, 5),
+--   ('Troti 6', 14.99, 6, 6, 789456123, 6),
+--   ('Troti 7', 11.99, 7, 7, 852963741, 7),
+--   ('Troti 8', 17.99, 8, 8, 963852741, 8),
+--   ('Troti 9', 13.99, 9, 9, 741852963, 9),
+--   ('Troti 10', 16.99, 10, 10, 258963147, 10),
+--   ('Troti 11', 10.99, 11, 11, 147258369, 11),
+--   ('Troti 12', 19.99, 12, 12, 369258147, 12),
+--   ('Troti 13', 15.99, 13, 13, 852741963, 13),
+--   ('Troti 14', 12.99, 14, 14, 741963852, 14),
+--   ('Troti 15', 9.99, 15, 15, 369741852, 15),
+--   ('Troti 16', 14.99, 16, 16, 258147369, 16),
+--   ('Troti 17', 11.99, 17, 17, 147963852, 17),
+--   ('Troti 18', 17.99, 18, 18, 963741852, 18),
+--   ('Troti 19', 13.99, 19, 19, 852369147, 19),
+--   ('Troti 20', 16.99, 20, 20, 369852741, 20);
 
 -- ALARM INSERTION
 -- INSERT INTO Alarm (alarm_name, alarm_description, alarm_date, alarm_time, product_id)
@@ -311,26 +340,26 @@ VALUES
 
 
 
-insert into TGroups (group_name) values
-  (''), -- empty string is used when group has two users
-  (''),
-  ('edu_afonso_admin'), -- this is just the name
-  ('chat_group');
+-- insert into TGroups (group_name) values
+--   (''), -- empty string is used when group has two users
+--   (''),
+--   ('edu_afonso_admin'), -- this is just the name
+--   ('chat_group');
 
-insert into TGroupsMembers (group_id, user_id) VALUES
-  (1,1), -- group 1 -> admin
-  (1,2), -- group 1 -> edu
-  (2,1), -- group 2 -> admin
-  (2,3), -- group 2 -> afonso
-  (3,1), -- group 3 -> admin
-  (3,2), -- group 3 -> edu
-  (3,3); -- group 3 -> afonso
+-- insert into TGroupsMembers (group_id, user_id) VALUES
+--   (1,1), -- group 1 -> admin
+--   (1,2), -- group 1 -> edu
+--   (2,1), -- group 2 -> admin
+--   (2,3), -- group 2 -> afonso
+--   (3,1), -- group 3 -> admin
+--   (3,2), -- group 3 -> edu
+--   (3,3); -- group 3 -> afonso
 
-insert into Messages (msg_text,group_id,user_id) VALUES
-  ('ola',1,1),
-  ('entao',1,2),
-  ('ola123',3,1),
-  ('ola123',3,2),
-  ('ola123',3,3),
-  ('ola123',1,2);
+-- insert into Messages (msg_text,group_id,user_id) VALUES
+--   ('ola',1,1),
+--   ('entao',1,2),
+--   ('ola123',3,1),
+--   ('ola123',3,2),
+--   ('ola123',3,3),
+--   ('ola123',1,2);
 

@@ -95,7 +95,7 @@
     };
     
 
-    map = L.map('map').setView([40.6339, -8.6469], 15);
+    map = L.map('map').setView([40.6339, -8.6469], 16);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

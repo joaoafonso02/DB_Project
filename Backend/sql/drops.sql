@@ -11,6 +11,9 @@
 -- drop TABLE Users;
 -- drop TABLE Supplier;
 -- drop TABLE Insurance;
+-- drop TABLE Troti;
+-- drop table Alarm;
+-- drop table ConfirmationTable
 -- drop TABLE Payment;
 
 -- FORCE DROP TABLES AND CONSTRAINTS
@@ -18,6 +21,7 @@
 -- DROP PROCEDURE IF EXISTS FilterChats;
 
 -- DROP TRIGGER IF EXISTS HashPassword;
+-- DROP TABLE TGroupMembers;
 DROP TRIGGER IF EXISTS UpdateTrotiAvailability;
 
 -- DROP PROCEDURE IF EXISTS UpdateTrotiStatus;
