@@ -30,9 +30,6 @@
 -- END
 
 
-
-
-
 -- CREATE PROCEDURE InsertUserWithAuthentication
 --     @Email NVARCHAR(255),
 --     @Username NVARCHAR(255),

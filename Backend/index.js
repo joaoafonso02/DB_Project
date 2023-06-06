@@ -51,12 +51,18 @@ async function executeTrigger() {
     }
 }
 
+function comparePassword(password, hashedPassword) {
+    // Add your password comparison logic here
+    // For example, you can use a library like bcrypt
+    return password === hashedPassword;
+  
+}
+
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Retrieve the hashed password for the given username
     const query = `SELECT id, upass FROM UAuthentication WHERE username = '${username}'`;
     const result = await app.locals.db.query(query);
     if (result.recordset.length !== 1) {
@@ -67,7 +73,6 @@ app.post('/post_login', async (req, res) => {
     const user = result.recordset[0];
     const hashedPassword = user.upass;
 
-    // Compare the provided password with the hashed password
     if (!comparePassword(password, hashedPassword)) {
       res.send({ status: 'error', message: 'Wrong username or password.' });
       return;
@@ -111,30 +116,30 @@ app.post('/post_register', async (req, res) => {
     }
 });
 
-
-  
-
 /* USER PROFILE */
-app.post('/post_profile', async (req,res)=>{
-    let {username,utoken} = req.body;
-    let query2 = await app.locals.db.query(`select username, name, phone, email, postalZip,region, country from Users INNER JOIN UAuthentication ON Users.id=UAuthentication.id where UAuthentication.username='${username}' and UAuthentication.utoken='${utoken}'`)
-    console.log(query2)
-    res.send(query2.recordset[0])
-})
-app.post('/post_profile_edit', async (req,res) => {
-    let {username,utoken,name,phone,email,postalZip,region,country} = req.body;
-    let query1 = await app.locals.db.query(`select id from UAuthentication where username='${username}' and utoken='${utoken}';`)
-    let id = query1.recordset[0].id;
-    let query2 = await app.locals.db.query(`update Users set name='${name}', phone='${phone}', email='${email}', postalZip='${postalZip}', region='${region}', country='${country}'`);
-})
-app.post('/post_profile_delete', async (req,res) => {
-    let {username,utoken} = req.body;
-    let query1 = await app.locals.db.query(`select id from UAuthentication where username='${username}' and utoken='${utoken}';`)
-    let id = query1.recordset[0].id;
-    let query2 = await app.locals.db.query(`delete from UAuthentication where id=${id}`)
-    let query3 = await app.locals.db.query(`delete from Users where id=${id}`)
-    res.send({status:'ok'})
-})
+app.post('/post_profile', async (req, res) => {
+    let { username, utoken } = req.body;
+    let query = await app.locals.db.query(`SELECT username, name, phone, email, postalZip, region, country FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
+    console.log(query);
+    res.send(query.recordset[0]);
+  });
+  
+app.post('/post_profile_edit', async (req, res) => {
+let { username, utoken, name, phone, email, postalZip, region, country } = req.body;
+let query1 = await app.locals.db.query(`SELECT id FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
+let id = query1.recordset[0].id;
+let query2 = await app.locals.db.query(`UPDATE Users SET name='${name}', phone='${phone}', email='${email}', postalZip='${postalZip}', region='${region}', country='${country}' WHERE id=${id}`);
+});
+
+app.post('/post_profile_delete', async (req, res) => {
+let { username, utoken } = req.body;
+let query1 = await app.locals.db.query(`SELECT id FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
+let id = query1.recordset[0].id;
+let query2 = await app.locals.db.query(`DELETE FROM UAuthentication WHERE id=${id}`);
+let query3 = await app.locals.db.query(`DELETE FROM Users WHERE id=${id}`);
+res.send({ status: 'ok' });
+});
+  
 
 /* CHAT ROUTES */
 app.post('/post_my_chats', async (req,res)=>{
@@ -307,6 +312,5 @@ let port = 5004;
 app.listen(port, async () => {
     app.locals.db = await sql.connect(configLocal);
     (await import('./createTables.js')).default(app.locals.db);
-    // execute HashPassword trigger
     console.log(`Server is running on port ${port}`);
 });
