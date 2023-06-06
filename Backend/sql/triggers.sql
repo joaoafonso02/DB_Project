@@ -1,22 +1,22 @@
-CREATE TRIGGER HashPasswordTrigger
-ON UAuthentication
-AFTER INSERT, UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
+-- CREATE TRIGGER HashPasswordTrigger
+-- ON UAuthentication
+-- AFTER INSERT, UPDATE
+-- AS
+-- BEGIN
+--     SET NOCOUNT ON;
 
-    UPDATE UAuthentication
-    SET UAuthentication.upass = HASHBYTES('SHA2_256', UAuthentication.upass),
-        UAuthentication.utoken = CONVERT(VARCHAR(50), NEWID())
-    FROM UAuthentication
-    INNER JOIN inserted
-    ON UAuthentication.id=inserted.id;
+--     UPDATE UAuthentication
+--     SET UAuthentication.upass = HASHBYTES('SHA2_256', UAuthentication.upass),
+--         UAuthentication.utoken = CONVERT(VARCHAR(50), NEWID())
+--     FROM UAuthentication
+--     INNER JOIN inserted
+--     ON UAuthentication.id=inserted.id;
 
-    SELECT UAuthentication.utoken 
-    FROM UAuthentication
-    INNER JOIN inserted
-    ON UAuthentication.id=inserted.id;
-END;
+--     SELECT UAuthentication.utoken 
+--     FROM UAuthentication
+--     INNER JOIN inserted
+--     ON UAuthentication.id=inserted.id;
+-- END;
 
 -- CREATE TRIGGER HashPassword
 -- ON UAuthentication
@@ -32,14 +32,14 @@ END;
 -- END;
 
 -- CREATE TRIGGER TrotiConfirmationTrigger -- Executes SP UpdateTrotiStatus
--- ON ConfirmationTable  
+-- ON Orders  
 -- AFTER INSERT
 -- AS
 -- BEGIN
 --   DECLARE @troti_id INT
 --   DECLARE @availability_status VARCHAR(50) 
 
---   SELECT @troti_id = troti_id,
+--   SELECT @troti_id = product,
 --          @availability_status = 'unavailable'
 --   FROM inserted
 

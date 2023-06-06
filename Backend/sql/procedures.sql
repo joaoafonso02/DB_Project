@@ -1,26 +1,26 @@
 -- EXEC CheckPasswordValidity @username='username', @pass='pass';
-CREATE PROCEDURE CheckPasswordValidity
-    @pass VARCHAR(50),
-    @username VARCHAR(50)
-AS
-BEGIN
-    SET NOCOUNT ON;
+-- CREATE PROCEDURE CheckPasswordValidity
+--     @pass VARCHAR(50),
+--     @username VARCHAR(50)
+-- AS
+-- BEGIN
+--     SET NOCOUNT ON;
     
-    IF EXISTS (
-        SELECT 1
-        FROM UAuthentication
-        WHERE username=@username and upass=HASHBYTES('SHA2_256', @pass)
-    )
-    BEGIN
-        PRINT 'valid';
-        UPDATE UAuthentication
-        SET utoken=CONVERT(varchar(50), NEWID())
-    END
-    ELSE
-    BEGIN
-        PRINT 'invalid';
-    END;
-END;
+--     IF EXISTS (
+--         SELECT 1
+--         FROM UAuthentication
+--         WHERE username=@username and upass=HASHBYTES('SHA2_256', @pass)
+--     )
+--     BEGIN
+--         PRINT 'valid';
+--         UPDATE UAuthentication
+--         SET utoken=CONVERT(varchar(50), NEWID())
+--     END
+--     ELSE
+--     BEGIN
+--         PRINT 'invalid';
+--     END;
+-- END;
 
 -- CREATE PROCEDURE GetUsers
 -- AS

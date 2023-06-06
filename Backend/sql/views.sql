@@ -12,10 +12,11 @@
 -- INNER JOIN UAuthentication ON Users.id = UAuthentication.id;
 
 
--- CREATE VIEW Profile AS
--- SELECT Users.id, Users.name, Users.phone, Users.email, Users.postalZip, Users.region, Users.country, UAuthentication.username, UAuthentication.utoken
--- FROM Users
--- INNER JOIN UAuthentication ON Users.id = UAuthentication.id;
+CREATE VIEW Profile AS
+SELECT Users.id, Users.name, Users.phone, Users.email, Users.postalZip, 
+    Users.region, Users.country, UAuthentication.username, UAuthentication.utoken
+FROM Users
+INNER JOIN UAuthentication ON Users.id = UAuthentication.id;
 
 
 -- CREATE VIEW AvailableTrotis AS

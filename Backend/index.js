@@ -3,16 +3,16 @@ import sql from 'mssql';
 import cors from 'cors';
 import hat from 'hat';
 
-let configLocal = {
-    server: 'localhost',
-    port: 1433,
-    user: 'SA',
-    password: '<batata@BD>',
-    database: 'TrotiNet',
-    options: {
-        trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
-    },
-};
+// let configLocal = {
+//     server: 'localhost',
+//     port: 1433,
+//     user: 'SA',
+//     password: '<batata@BD>',
+//     database: 'TrotiNet',
+//     options: {
+//         trustServerCertificate: true, // Change to 'false' if not using a trusted certificate
+//     },
+// };
 
 let config = {
     server: 'mednat.ieeta.pt',
@@ -38,6 +38,10 @@ app.get('/', (req, res) => {
 // app.get('/get_dbs', async (req, res) => {
 //     res.send(await app.locals.db.query('select name from sys.databases;'));
 // });
+
+function comparePassword(password, hashedPassword) {
+    return password === hashedPassword;
+}
 
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req, res) => {
@@ -103,40 +107,42 @@ app.post('/post_profile', async (req, res) => {
     let query = await app.locals.db.query(`SELECT username, name, phone, email, postalZip, region, country FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
     console.log(query);
     res.send(query.recordset[0]);
-  });
+});
   
 app.post('/post_profile_edit', async (req, res) => {
-let { username, utoken, name, phone, email, postalZip, region, country } = req.body;
-let query1 = await app.locals.db.query(`SELECT id FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
-let id = query1.recordset[0].id;
-let query2 = await app.locals.db.query(`UPDATE Users SET name='${name}', phone='${phone}', email='${email}', postalZip='${postalZip}', region='${region}', country='${country}' WHERE id=${id}`);
+    let { username, utoken, name, phone, email, postalZip, region, country } = req.body;
+    let query1 = await app.locals.db.query(`SELECT id FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
+    let id = query1.recordset[0].id;
+    let query2 = await app.locals.db.query(`UPDATE Users SET name='${name}', phone='${phone}', email='${email}', postalZip='${postalZip}', region='${region}', country='${country}' WHERE id=${id}`);
 });
 
 app.post('/post_profile_delete', async (req, res) => {
-let { username, utoken } = req.body;
-let query1 = await app.locals.db.query(`SELECT id FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
-let id = query1.recordset[0].id;
-let query2 = await app.locals.db.query(`DELETE FROM UAuthentication WHERE id=${id}`);
-let query3 = await app.locals.db.query(`DELETE FROM Users WHERE id=${id}`);
-res.send({ status: 'ok' });
+    let { username, utoken } = req.body;
+    let query1 = await app.locals.db.query(`SELECT id FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
+    let id = query1.recordset[0].id;
+    let query2 = await app.locals.db.query(`DELETE FROM UAuthentication WHERE id=${id}`);
+    let query3 = await app.locals.db.query(`DELETE FROM Users WHERE id=${id}`);
+    res.send({ status: 'ok' });
 });
   
 
 /* CHAT ROUTES */
-app.post('/post_my_chats', async (req,res)=>{
-    let {username,utoken} = req.body;
-    console.log(username,utoken)
-    let query1 = await app.locals.db.query(`select Tgroups.group_name,Tgroups.group_id from (TGroups INNER JOIN TGroupsMembers ON Tgroups.group_id=TGroupsMembers.group_id) INNER JOIN UAuthentication on TGroupsMembers.user_id=UAuthentication.id where UAuthentication.username='${username}'`);
+app.post('/post_my_chats', async (req, res) => {
+    let { username, utoken } = req.body;
+    console.log(username, utoken);
+    let query1 = await app.locals.db.query(`SELECT Tgroups.group_name, Tgroups.group_id FROM (TGroups INNER JOIN TGroupsMembers ON Tgroups.group_id=TGroupsMembers.group_id) INNER JOIN UAuthentication ON TGroupsMembers.user_id=UAuthentication.id WHERE UAuthentication.username='${username}' ORDER BY Tgroups.group_name`);
     let ret = [];
-    for( let chat of query1.recordset ) {
-        if( chat.group_name=="" ) {
-            let query2 = await app.locals.db.query(`select UAuthentication.id,UAuthentication.username from UAuthentication INNER JOIN TGroupsMembers ON UAuthentication.id=TGroupsMembers.user_id where TGroupsMembers.group_id=${chat.group_id};`);
-            chat.group_name = query2.recordset.find(e=>e.username!=username).username
+    for (let chat of query1.recordset) {
+        if (chat.group_name == "") {
+            let query2 = await app.locals.db.query(`SELECT UAuthentication.id, UAuthentication.username FROM UAuthentication INNER JOIN TGroupsMembers ON UAuthentication.id=TGroupsMembers.user_id WHERE TGroupsMembers.group_id=${chat.group_id}`);
+            chat.group_name = query2.recordset.find(e => e.username != username).username;
         }
-        ret.push( {...chat} )
+        ret.push({ ...chat });
     }
-    res.send(ret)
-})
+    res.send(ret);
+});
+
+
 app.post('/post_my_messages', async (req,res)=>{
     // TODO: verify if user can read this messages
     let {group_id} = req.body;
@@ -144,6 +150,7 @@ app.post('/post_my_messages', async (req,res)=>{
     // console.log(query1.recordset)
     res.send(query1.recordset);
 })
+
 app.post('/post_send_message', async (req,res)=>{
     // TODO: verify if user can read this messages
     let {username,utoken,msg_text,group_id} = req.body;
@@ -214,7 +221,7 @@ app.post('/post_trotis', async (req, res) => {
   
         console.log(`Troti attributes received successfully! Battery: Id=${trotiId},  ${trotiBattery}%, Insurance: ${insurance_id}, Alarm: ${alarm_id}, Availability: ${availability_status}, Location: ${trotiLat}, ${trotiLng}`);
 
-        const insertQuery = `INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong) 
+        const insertQuery = `INSERT INTO Product (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong) 
                             VALUES (${trotiBattery}, ${insurance_id}, ${alarm_id}, '${availability_status}', ${trotiLat}, ${trotiLng})`;
         await app.locals.db.query(insertQuery);
 
@@ -229,7 +236,7 @@ app.post('/post_trotis', async (req, res) => {
 
 async function getTrotis() {
     try {
-      const query = "SELECT * FROM Troti";
+      const query = "SELECT * FROM Product";
       const result = await app.locals.db.query(query);
       return result.recordset;
     } catch (error) {
@@ -242,6 +249,7 @@ async function getTrotis() {
 app.get("/get_trotis", async (req, res) => {
     try {
       const trotis = await getTrotis();
+      console.log("Trotis retrieved successfully!");
       res.send(trotis);
     } catch (error) {
       console.error("Error handling troti request:", error);
@@ -249,33 +257,40 @@ app.get("/get_trotis", async (req, res) => {
     }
 }); 
 
-// condirm destination and update troti status
+// confirm destination and update troti status
 app.post('/confirm_destination', async (req, res) => {
     try {
-        const { trotiId, destination } = req.body;
-
-        if (trotiId === undefined || destination === undefined) {
-            throw new Error('Invalid request body');
-        }
-
-        // Convert destination object to a string representation
-        const destinationString = JSON.stringify(destination);
-
-        // Insert values into ConfirmationTable using a prepared statement or stored procedure
-        const query = `INSERT INTO ConfirmationTable (troti_id, destination, confirmed_at) VALUES (${trotiId}, '${destinationString}', GETDATE())`;
-        await app.locals.db.query(query);
-
-        res.json({ success: true });
+      const { user_id, payment, product } = req.body;
+  
+      console.log(`Confirmation received successfully! User: ${user_id}, Payment: ${payment}, Product: ${product}`);
+  
+      if (user_id === undefined || payment === undefined || product === undefined) {
+        throw new Error('Invalid request body');
+      }
+  
+      const paymentInt = parseInt(payment, 10); // Convert payment string to an integer
+  
+      // Check if the payment exists in the Payment table
+    //   const paymentCheckQuery = `SELECT COUNT(*) AS count FROM Payment WHERE id = ${paymentInt}`;
+    //   const paymentCheckResult = await app.locals.db.query(paymentCheckQuery);
+  
+    //   if (paymentCheckResult.recordset[0].count === 0) {
+    //     throw new Error('Invalid payment');
+    //   }
+  
+      // Insert values into the Orders table using parameterized queries
+      const query = `INSERT INTO Orders (user_id, payment, product) VALUES ( ${user_id},  ${paymentInt},  ${product})`;
+      await app.locals.db.query(query, { user_id, payment: paymentInt, product });
+  
+      res.json({ success: true });
     } catch (error) {
-        console.error('Error inserting confirmation:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error inserting confirmation:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-});
-
-
-
-
-
+  });
+  
+  
+  
 
 app.post('/post_usernames', async (req, res) => {
     try {
@@ -291,7 +306,7 @@ app.post('/post_usernames', async (req, res) => {
 // Start Express and then Start SQL
 let port = 5004;
 app.listen(port, async () => {
-    app.locals.db = await sql.connect(configLocal);
+    app.locals.db = await sql.connect(config);
     (await import('./createTables.js')).default(app.locals.db);
     console.log(`Server is running on port ${port}`);
 });

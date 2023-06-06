@@ -123,6 +123,7 @@
 		});
 		chats = await resp2.json();
 	}
+	
 	async function create_new_chat_submit() {
 		openAdd = true;
 		console.log(newChatTitle, newChatUsers.split(" "))
