@@ -96,11 +96,17 @@ VALUES (70, 252627, 282930, 'available', 40.6347, -8.6574);
 INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
 VALUES (60, 131415, 161718, 'available', 40.6343, -8.6580);
 -- Authentication insert
+
 -- INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
 --   (1,'admin','admin','token'),
 --   (2,'edu','edu','token'),
 --   (3,'afonso','afonso','token'),
 --   (4,'miraNieves','miranocu','token');
+INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
+  (1,'admin','admin','token'),
+  (2,'edu','edu','token'),
+  (3,'afonso','afonso','token');
+
 
 -- Supplier Insertion
 -- INSERT INTO Supplier (nif, sname, phone, email, saddress, postalZip, country)
