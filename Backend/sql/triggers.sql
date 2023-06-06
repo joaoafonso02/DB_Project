@@ -34,14 +34,14 @@ END;
 -- END;
 
 -- CREATE TRIGGER TrotiConfirmationTrigger -- Executes SP UpdateTrotiStatus
--- ON ConfirmationTable  
+-- ON Orders  
 -- AFTER INSERT
 -- AS
 -- BEGIN
 --   DECLARE @troti_id INT
 --   DECLARE @availability_status VARCHAR(50) 
 
---   SELECT @troti_id = troti_id,
+--   SELECT @troti_id = product,
 --          @availability_status = 'unavailable'
 --   FROM inserted
 

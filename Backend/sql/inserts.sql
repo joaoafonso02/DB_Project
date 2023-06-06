@@ -65,36 +65,160 @@ VALUES
 
 
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (90, 123, 456, 'available', 40.6339, -8.6579);
+-- Inserts for the Insurance table
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 1', '2023-06-01', 100.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (75, 789, 101112, 'available', 40.6339, -8.6580);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 2', '2023-06-01', 150.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (80, 131415, 161718, 'available', 40.6343, -8.6580);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 3', '2023-06-01', 200.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (35, 192021, 222324, 'available', 40.6338, -8.6571);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 4', '2023-06-01', 250.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (20, 252627, 282930, 'available', 40.6340, -8.6584);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 5', '2023-06-01', 300.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (15, 313233, 343536, 'available', 40.6434, -8.6406);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 6', '2023-06-01', 350.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (5, 313233, 343536, 'available', 40.6424, -8.6426);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 7', '2023-06-01', 400.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (10, 313233, 343536, 'available', 40.6428, -8.6416);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 8', '2023-06-01', 450.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (70, 252627, 282930, 'available', 40.6347, -8.6574);
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 9', '2023-06-01', 500.00);
 
--- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
--- VALUES (60, 131415, 161718, 'available', 40.6343, -8.6580);
--- Authentication insert
+INSERT INTO Insurance (description, validity, price)
+VALUES ('Insurance 10', '2023-06-01', 550.00);
+
+-- Inserts for the Supplier table
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('123456789', 'Supplier 1', '1923941923', 'supplier1@example.com', 'Address 1');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('987654321', 'Supplier 2', '910291924', 'supplier2@example.com', 'Address 2');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('111111111', 'Supplier 3', '1111111112', 'supplier3@example.com', 'Address 3');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('222222222', 'Supplier 4', '2222222221', 'supplier4@example.com', 'Address 4');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('333333333', 'Supplier 5', '3333333331', 'supplier5@example.com', 'Address 5');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('444444444', 'Supplier 6', '4444444441', 'supplier6@example.com', 'Address 6');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('555555555', 'Supplier 7', '5555555551', 'supplier7@example.com', 'Address 7');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('666666666', 'Supplier 8', '6666666661', 'supplier8@example.com', 'Address 8');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('777777777', 'Supplier 9', '7777777771', 'supplier9@example.com', 'Address 9');
+
+-- INSERT INTO Supplier (nif, name, phone, email, address)
+-- VALUES ('888888888', 'Supplier 10', '8888888881', 'supplier10@example.com', 'Address 10');
+
+
+
+-- Inserts for the Product table
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (90, 'available', 40.6339, -8.6579, 1, 1, '123456789');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (75, 'available', 40.6339, -8.6580, 2, 2, '987654321');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (80, 'available', 40.6343, -8.6580, 3, 3, '111111111');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (35, 'available', 40.6338, -8.6571, 4, 4, '333333333');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (20, 'available', 40.6340, -8.6584, 5, 5, '222222222');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (15, 'available', 40.6434, -8.6406, 6, 6, '444444444');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (5, 'available', 40.6424, -8.6426, 7, 7, '555555555');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (10, 'available', 40.6428, -8.6416, 8, 8, '666666666');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (70, 'available', 40.6347, -8.6574, 9, 9, '777777777');
+
+-- INSERT INTO Product (battery, availability_status, loc_lat, loc_long, alarm, insurance, Supplier_nif)
+-- VALUES (60, 'available', 40.6343, -8.6580, 10, 10, '888888888');
+
+-- -- Inserts for the Alarm table
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 1', 'Alarm 1 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 2', 'Alarm 2 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 3', 'Alarm 3 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 4', 'Alarm 4 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 5', 'Alarm 5 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 6', 'Alarm 6 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 7', 'Alarm 7 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 8', 'Alarm 8 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 9', 'Alarm 9 description');
+
+-- INSERT INTO Alarm (name, description)
+-- VALUES ('Alarm 10', 'Alarm 10 description');
+
+
+INSERT INTO Payment (total, pay_date)
+VALUES (100, '2020-01-01');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (200, '2020-02-02');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (300, '2020-03-03');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (400, '2020-04-04');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (500, '2020-05-05'); 
+
+INSERT INTO Payment (total, pay_date)
+VALUES (600, '2020-06-06');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (700, '2020-07-07');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (900, '2020-08-07');
+
+INSERT INTO Payment (total, pay_date)
+VALUES (1000, '2020-09-07');
+
 
 -- INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
 --   (1,'admin','admin','token'),

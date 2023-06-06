@@ -38,7 +38,7 @@ CREATE TABLE [Product]
 (
  [id]           int IDENTITY (1, 1) NOT NULL ,
  [battery]      real NOT NULL ,
- [status]       varchar(50) NOT NULL ,
+ [availability_status]       varchar(50) NOT NULL ,
  [loc_lat]      real NOT NULL ,
  [loc_long]     real NOT NULL ,
  [alarm]        int NOT NULL ,
@@ -125,13 +125,13 @@ CREATE NONCLUSTERED INDEX [FK_1] ON [UAuthentication]
 CREATE TABLE [Orders]
 (
  [id]      int IDENTITY (1, 1) NOT NULL ,
- [user]    int NOT NULL ,
+ [user_id]    int NOT NULL ,
  [payment] int NOT NULL ,
  [product] int NOT NULL ,
 
 
  CONSTRAINT [PK_8] PRIMARY KEY CLUSTERED ([id] ASC),
- CONSTRAINT [FK_6] FOREIGN KEY ([user])  REFERENCES [Users]([id]),
+ CONSTRAINT [FK_6] FOREIGN KEY ([user_id])  REFERENCES [Users]([id]),
  CONSTRAINT [FK_7] FOREIGN KEY ([payment])  REFERENCES [Payment]([id]),
  CONSTRAINT [FK_8] FOREIGN KEY ([product])  REFERENCES [Product]([id])
 );
@@ -214,7 +214,7 @@ CREATE TABLE [Messages]
 
 CREATE NONCLUSTERED INDEX [FK_1] ON [Messages] 
  (
-  [user_id] ASC
+  [user_id] ASC 
  )
 
 

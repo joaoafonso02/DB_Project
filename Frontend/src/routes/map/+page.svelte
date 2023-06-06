@@ -109,14 +109,15 @@
         const trotis = await response.json();
 
         trotis.forEach((troti) => {
-          let lat = troti.trotiLat;
-          let lng = troti.trotiLong;
+          let lat = troti.loc_lat;
+          let lng = troti.loc_long;
           const trotiMarker = L.marker([lat, lng], { icon: icon }).addTo(map);
 
           // Customize the marker properties based on troti attributes
           const trotiBattery = troti.battery;
           const trotiNumber = troti.id;
           let trotiStatus = troti.availability_status;
+          let trotiSupplier = troti.supplier;
 
           trotiMarker.bindPopup(
             `Troti #${trotiNumber}<br>${trotiStatus}<br>${getBatteryIcon(trotiBattery)} ${trotiBattery}%`
@@ -235,17 +236,29 @@
       const trotis = await response.json();
 
       let destination = destinationMarker.getLatLng();
+      // get user id
+      let user = Math.random() * 20;
+      let payment = document.getElementById('tripPrice').textContent;
+      let payment_id = Math.floor(Math.random() * 10) +1;
+      // remove the last character
+      payment = payment.slice(0, -1);
+
+      let order_id = Math.floor(Math.random() * 10000) + 50;
       console.log('Troti ID: ', chosenTroti.trotiId);
 
       // Make an AJAX request to your backend endpoint to insert values
       fetch('http://localhost:5004/confirm_destination', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-              trotiId: chosenTroti.trotiId,
-              destination: destination,
+            user_id: user,
+            payment: payment_id,
+            product: chosenTroti.trotiId,
+            // destination: destination,
+
+              
           }),
       })
       .then(response => response.json())
