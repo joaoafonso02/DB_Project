@@ -5,17 +5,17 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @GeneratedToken VARCHAR(50);
-    
     UPDATE UAuthentication
     SET UAuthentication.upass = HASHBYTES('SHA2_256', UAuthentication.upass),
         UAuthentication.utoken = CONVERT(VARCHAR(50), NEWID())
     FROM UAuthentication
-    INNER JOIN inserted ON UAuthentication.id = inserted.id;
+    INNER JOIN inserted
+    ON UAuthentication.id=inserted.id;
 
-    SELECT UAuthentication.username, inserted.utoken AS GeneratedToken
+    SELECT UAuthentication.utoken 
     FROM UAuthentication
-    INNER JOIN inserted ON UAuthentication.id = inserted.id;
+    INNER JOIN inserted
+    ON UAuthentication.id=inserted.id;
 END;
 
 -- CREATE TRIGGER HashPassword

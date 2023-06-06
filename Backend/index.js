@@ -39,18 +39,6 @@ app.get('/', (req, res) => {
 //     res.send(await app.locals.db.query('select name from sys.databases;'));
 // });
 
-async function executeTrigger() {
-    try {
-      let pool = await sql.connect(config);
-      await pool.request().execute('HashPassword');
-      console.log('Trigger executed successfully.');
-    } catch (error) {
-      console.error('Error executing trigger:', error);
-    } finally {
-      sql.close();
-    }
-}
-
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req, res) => {
   const { username, password } = req.body;

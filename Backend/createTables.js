@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 export default async function(bd) {
-  let filesInOrder = ['drops2', 'tables2', 'triggers'];
+  let filesInOrder = ['drops', 'tables2', 'procedures', 'triggers'];
   for (let file of filesInOrder) {
     let sqlFile = fs.readFileSync('./sql/' + file + '.sql', 'utf-8');
     await bd.query(sqlFile);
