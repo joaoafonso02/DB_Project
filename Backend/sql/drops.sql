@@ -13,3 +13,4 @@ DROP TABLE if EXISTS Alarm;
 
 -- PROCEDURES
 DROP PROCEDURE if EXISTS CheckPasswordValidity;
+DROP PROCEDURE if EXISTS CreateChat;

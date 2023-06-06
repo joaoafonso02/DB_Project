@@ -93,7 +93,7 @@
 			body: JSON.stringify({
 				username: localStorage.getItem('username'),
 				utoken: localStorage.getItem('utoken'),
-				msg_text: textBoxValue,
+				msg: textBoxValue,
 				group_id: current_group_id
 			})
 		});
@@ -135,7 +135,7 @@
 				username: localStorage.getItem('username'),
 				utoken: localStorage.getItem('utoken'),
 				title: newChatTitle,
-				usernames: (myUsername+" "+newChatUsers).split(" ")
+				usernames: (myUsername+" "+newChatUsers).split(" ").join(",")
 			})
 		});
 		openAdd = false;
@@ -264,12 +264,12 @@
 				  {#each filteredChats as chat}
 					<button
 					  id="chatButton"
-					  on:click={openChatAction(event, chat.group_id)}
+					  on:click={openChatAction(event, chat.id)}
 					  class="position-relative list-group-item list-group-item-action rounded-0"
 					>
-					  {chat.group_name}
+					  {chat.gname}
 					  <button
-						on:click={delete_chat(event, chat.group_id)}
+						on:click={delete_chat(event, chat.id)}
 						id="chatDeleteButton"
 						class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0"
 						style=""
@@ -283,12 +283,12 @@
 				  {#each chats as chat}
 					<button
 					  id="chatButton"
-					  on:click={openChatAction(event, chat.group_id)}
+					  on:click={openChatAction(event, chat.id)}
 					  class="position-relative list-group-item list-group-item-action rounded-0"
 					>
-					  {chat.group_name}
+					  {chat.gname}
 					  <button
-						on:click={delete_chat(event, chat.group_id)}
+						on:click={delete_chat(event, chat.id)}
 						id="chatDeleteButton"
 						class="position-absolute end-0 top-50 translate-middle text-danger px-2 border-0"
 						style=""
@@ -334,9 +334,9 @@
 							style="background:#585;width:fit-content;max-width:80%;"
 						>
 							<span style="font-size:0.6rem"
-								>{new Date(msg.sent_at).getHours()}:{new Date(msg.sent_at).getMinutes()}</span
+								>{new Date(msg.sent_date).getHours()}:{new Date(msg.sent_date).getMinutes()}</span
 							>
-							{msg.msg_text}
+							{msg.msg}
 						</div>
 					</div>
 				{:else}
@@ -346,9 +346,9 @@
 					>
 						<div class="" style="font-size:0.7rem;">{msg.username}</div>
 						<div>
-							{msg.msg_text}
+							{msg.msg}
 							<span style="font-size:0.6rem"
-								>{new Date(msg.sent_at).getHours()}:{new Date(msg.sent_at).getMinutes()}</span
+								>{new Date(msg.sent_date).getHours()}:{new Date(msg.sent_date).getMinutes()}</span
 							>
 						</div>
 					</div>

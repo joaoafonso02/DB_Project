@@ -1,9 +1,9 @@
 -- Our Users
 INSERT INTO Users (name,phone,email,postalZip,region,country)
 VALUES
-  ('admin','919875123','admin@trotinet.pt','0000-000','Lisbon','Portugal'),
-  ('edu','939585218','edu@edu.pt','3750-811','Agueda','Portugal'),
-  ('afonso','964419133','afonso@afonso.pt','3800-311','Aveiro','Portugal');
+  ('admin','919875123','admin@trotinet.pt','0000-000','Lisbon','Portugal'), -- id -> 1
+  ('edu','939585218','edu@edu.pt','3750-811','Agueda','Portugal'), -- id -> 2
+  ('afonso','964419133','afonso@afonso.pt','3800-311','Aveiro','Portugal'); -- id -> 3
 INSERT INTO Users (name,phone,email,postalZip,region,country)
 VALUES
   ('Myra Nieves','(926) 370-4452','pede.cras@google.couk','5954 QQ','South Jeolla','Nigeria'),
@@ -28,73 +28,72 @@ VALUES
   ('Brett Wise','(591) 811-1632','enim.consequat@outlook.net','601758','Zuid Holland','South Africa'),
   ('Damian Shannon','(960) 374-5532','proin.nisl.sem@protonmail.com','9781','Kentucky','Pakistan'),
   ('Harriet Reed','(858) 840-6043','feugiat.metus.sit@hotmail.net','690652','Guerrero','Peru');
-INSERT INTO Users (name,phone,email,postalZip,region,country)
+
+INSERT INTO UAuthentication (id,username,upass)
 VALUES
-  ('Caesar Medina','(627) 261-1467','in@protonmail.com','55212','Zuid Holland','New Zealand'),
-  ('Elliott Bright','1-794-608-7740','vitae.risus.duis@icloud.net','635113','West Region','India'),
-  ('Scott Mathews','1-898-812-3584','nascetur.ridiculus.mus@outlook.com','183143','Friesland','Brazil'),
-  ('Tobias Webb','1-625-614-2231','elit.erat@hotmail.ca','0534','Zhōngnán','Turkey'),
-  ('Amos Blevins','1-368-734-4808','nisi@outlook.org','12S 2B2','Arequipa','Philippines'),
-  ('MacKensie Reynolds','(720) 682-1741','pulvinar@google.com','3146','Zakarpattia oblast','Spain'),
-  ('Cecilia Carlson','1-957-453-3805','dictum.proin@outlook.com','78415','Munster','Brazil'),
-  ('Gage Velasquez','(233) 960-3319','eget.metus@outlook.couk','6647','Katsina','Austria'),
-  ('Maryam Cooper','(325) 877-3887','fermentum.convallis.ligula@hotmail.org','341644','Zhōngnán','Vietnam'),
-  ('Dieter Booth','(786) 633-1156','adipiscing.non.luctus@outlook.com','86645','South Chungcheong','Indonesia');
-INSERT INTO Users (name,phone,email,postalZip,region,country)
+  (1,'admin','admin'),
+  (2,'edu','edu'),
+  (3,'afonso','afonso');
+
+INSERT INTO TGroups (gname) 
 VALUES
-  ('Macaulay Wall','(838) 346-3220','pellentesque@yahoo.couk','S59 1KN','Odessa oblast','Australia'),
-  ('Kaseem Gomez','1-610-568-8731','ullamcorper@icloud.edu','76T 4X4','Hidalgo','Indonesia'),
-  ('Isaac Grimes','1-459-743-6636','odio.aliquam@hotmail.couk','29735','Vestland','Peru'),
-  ('Elaine Hodge','(327) 523-7473','congue.a@outlook.net','289982','Mykolaiv oblast','Austria'),
-  ('Brenden Hardin','(843) 576-5136','nam@yahoo.couk','3954','Ivano-Frankivsk oblast','Russian Federation'),
-  ('Merritt Burke','1-588-336-6763','turpis.aliquam@hotmail.ca','873877','Virginia','South Korea'),
-  ('Yvonne Hughes','(312) 116-7878','erat@outlook.ca','845933','Devon','Singapore'),
-  ('Kevyn Reilly','(596) 538-5557','sociis.natoque@outlook.ca','181246','Aydın','Australia'),
-  ('Alec Kent','(555) 231-7849','risus.odio@google.couk','72577','South Island','Philippines'),
-  ('Basil Stephenson','(335) 124-0642','luctus.ut.pellentesque@yahoo.edu','35088','Zhōngnán','Mexico');
-INSERT INTO Users (name,phone,email,postalZip,region,country)
+  (''), -- empty string is used when group has two users
+  (''),
+  ('edu_afonso_admin'), -- this is just the name
+  ('chat_group');
+
+INSERT INTO TGroupMembers (user_id, group_id)
 VALUES
-  ('John Howard','(835) 451-8435','eleifend@protonmail.couk','722273','Angus','South Korea'),
-  ('Emma Turner','(290) 723-2506','ligula@hotmail.net','TG8N 7CY','Santa Catarina','Italy'),
-  ('Jade Kerr','(245) 187-6151','vitae@hotmail.com','33-42','Viken','Indonesia'),
-  ('Astra Nielsen','1-437-245-1206','penatibus@yahoo.edu','3574','Cartago','Norway'),
-  ('Sandra Cherry','(481) 621-6113','dignissim.magna@hotmail.net','4967-6766','Victoria','South Korea'),
-  ('Benjamin Guerrero','1-529-734-3377','risus@google.ca','37508','Berwickshire','New Zealand'),
-  ('Rebecca Griffin','1-295-648-7843','odio.nam@hotmail.edu','6378','Luik','Chile'),
-  ('Noble Velasquez','(918) 852-5648','at.auctor.ullamcorper@outlook.com','28-407','Wyoming','Austria'),
-  ('Kylynn Thompson','1-866-286-8493','ut.tincidunt@yahoo.org','87584','Diyarbakır','India'),
-  ('Lane Mcmahon','1-281-468-7193','eleifend.nunc@outlook.couk','65108-128','Luxemburg','Germany');
+  (1, 1),
+  (2, 1),
+  (3, 2),
+  (1, 2),
+  (1, 3),
+  (2, 3),
+  (3, 3);
+
+-- -- MESSAGES INSERTION
+INSERT INTO Messages (msg, sent_date, user_id, group_id) 
+VALUES
+  ('Hey everyone! I''m excited to be here!', '2023-06-02 10:00:00', 1, 3),
+  ('Me too! I can''t wait to get started!', '2023-06-02 10:01:00', 2, 3),
+  ('I''m looking forward to working with you all!', '2023-06-02 10:02:00', 3, 3),
+  ('Same here! Let''s do this!', '2023-06-02 10:03:00', 1, 3),
+  ('Hello everyone! Welcome to our group!', '2023-06-03 10:00:00', 2, 3),
+  ('Hi! I''m excited to be here!', '2023-06-03 10:01:00', 3, 3);
 
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (90, 123, 456, 'available', 40.6339, -8.6579);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (75, 789, 101112, 'available', 40.6339, -8.6580);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (80, 131415, 161718, 'available', 40.6343, -8.6580);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (90, 123, 456, 'available', 40.6339, -8.6579);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (35, 192021, 222324, 'available', 40.6338, -8.6571);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (75, 789, 101112, 'available', 40.6339, -8.6580);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (20, 252627, 282930, 'available', 40.6340, -8.6584);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (80, 131415, 161718, 'available', 40.6343, -8.6580);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (15, 313233, 343536, 'available', 40.6434, -8.6406);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (35, 192021, 222324, 'available', 40.6338, -8.6571);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (5, 313233, 343536, 'available', 40.6424, -8.6426);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (20, 252627, 282930, 'available', 40.6340, -8.6584);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (10, 313233, 343536, 'available', 40.6428, -8.6416);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (15, 313233, 343536, 'available', 40.6434, -8.6406);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (70, 252627, 282930, 'available', 40.6347, -8.6574);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (5, 313233, 343536, 'available', 40.6424, -8.6426);
 
-INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
-VALUES (60, 131415, 161718, 'available', 40.6343, -8.6580);
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (10, 313233, 343536, 'available', 40.6428, -8.6416);
+
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (70, 252627, 282930, 'available', 40.6347, -8.6574);
+
+-- INSERT INTO Troti (battery, insurance_id, alarm_id, availability_status, trotiLat, trotiLong)
+-- VALUES (60, 131415, 161718, 'available', 40.6343, -8.6580);
 -- Authentication insert
 
 -- INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
@@ -102,10 +101,10 @@ VALUES (60, 131415, 161718, 'available', 40.6343, -8.6580);
 --   (2,'edu','edu','token'),
 --   (3,'afonso','afonso','token'),
 --   (4,'miraNieves','miranocu','token');
-INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
-  (1,'admin','admin','token'),
-  (2,'edu','edu','token'),
-  (3,'afonso','afonso','token');
+-- INSERT INTO UAuthentication (id,username,upass,utoken) VALUES
+--   (1,'admin','admin','token'),
+--   (2,'edu','edu','token'),
+--   (3,'afonso','afonso','token');
 
 
 -- Supplier Insertion

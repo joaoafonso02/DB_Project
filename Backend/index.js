@@ -42,28 +42,9 @@ app.get('/', (req, res) => {
 /* USER AUTHENTICATION */
 app.post('/post_login', async (req, res) => {
   const { username, password } = req.body;
-
   try {
-    const query = `SELECT id, upass FROM UAuthentication WHERE username = '${username}'`;
-    const result = await app.locals.db.query(query);
-    if (result.recordset.length !== 1) {
-      res.send({ status: 'error', message: 'Wrong username or password.' });
-      return;
-    }
-
-    const user = result.recordset[0];
-    const hashedPassword = user.upass;
-
-    if (!comparePassword(password, hashedPassword)) {
-      res.send({ status: 'error', message: 'Wrong username or password.' });
-      return;
-    }
-
-    const token = hat();
-    const updateQuery = `UPDATE UAuthentication SET utoken = '${token}' WHERE id = ${user.id}`;
-    await app.locals.db.query(updateQuery);
-
-    res.send({ status: 'ok', token });
+    const result = await app.locals.db.query(`EXEC CheckPasswordValidity @pass='${password}', @username='${username}';`);
+    res.send({ status: 'ok', token:result.recordset[0].utoken });
   } catch (error) {
         console.error('Error logging in:', error);
         res.send({ status: 'error', message: 'Failed to log in.' });
@@ -126,15 +107,25 @@ res.send({ status: 'ok' });
 app.post('/post_my_chats', async (req,res)=>{
     let {username,utoken} = req.body;
     console.log(username,utoken)
-    let query1 = await app.locals.db.query(`select Tgroups.group_name,Tgroups.group_id from (TGroups INNER JOIN TGroupsMembers ON Tgroups.group_id=TGroupsMembers.group_id) INNER JOIN UAuthentication on TGroupsMembers.user_id=UAuthentication.id where UAuthentication.username='${username}'`);
+    // let query1 = await app.locals.db.query(`select * from TGroupMembers;`)
+    let query1 = await app.locals.db.query(`
+        select Tgroups.gname,Tgroups.id 
+        from (TGroups INNER JOIN TGroupMembers 
+            ON Tgroups.id=TGroupMembers.group_id
+            ) 
+            INNER JOIN UAuthentication 
+            on TGroupMembers.user_id=UAuthentication.id 
+            where UAuthentication.username='${username}'`);
     let ret = [];
     for( let chat of query1.recordset ) {
-        if( chat.group_name=="" ) {
-            let query2 = await app.locals.db.query(`select UAuthentication.id,UAuthentication.username from UAuthentication INNER JOIN TGroupsMembers ON UAuthentication.id=TGroupsMembers.user_id where TGroupsMembers.group_id=${chat.group_id};`);
-            chat.group_name = query2.recordset.find(e=>e.username!=username).username
+        if( chat.gname=="" ) {
+            let query2 = await app.locals.db.query(`select UAuthentication.id,UAuthentication.username from UAuthentication INNER JOIN TGroupMembers ON UAuthentication.id=TGroupMembers.user_id where TGroupMembers.group_id=${chat.id};`);
+            console.log(query2)
+            chat.gname = query2.recordset.find(e=>e.username!=username).username
         }
         ret.push( {...chat} )
     }
+    console.log(ret)
     res.send(ret)
 })
 app.post('/post_my_messages', async (req,res)=>{
@@ -146,48 +137,67 @@ app.post('/post_my_messages', async (req,res)=>{
 })
 app.post('/post_send_message', async (req,res)=>{
     // TODO: verify if user can read this messages
-    let {username,utoken,msg_text,group_id} = req.body;
-    let query1 = await app.locals.db.query(`select id from UAuthentication where username='${username}';`);
-    let id = query1.recordset[0].id;
-    let query2 = await app.locals.db.query(`insert into Messages (msg_text,group_id,user_id) values ('${msg_text}',${group_id},${id})`);
-    res.send({})
+    let {username,utoken,msg,group_id} = req.body;
+    try {
+        let query1 = await app.locals.db.query(`select id from UAuthentication where username='${username}';`);
+        let id = query1.recordset[0].id;
+        let query2 = await app.locals.db.query(`insert into Messages (msg,group_id,user_id) values ('${msg}',${group_id},${id})`);
+        res.send({})
+    } catch (error) {
+        console.error('Error registering user:', error);
+        res.send({ status: 'error', message: 'Failed to register user.' });
+    }
 })
 
 app.post('/post_new_chat', async (req, res) => {
     let { username, utoken, title, usernames } = req.body;
+
+    try {
+        let query = await app.locals.db.query(`EXEC CreateChat @cname='${title}', @arrayUsernames='${usernames}'`);
+        res.send({})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
     
     // Insert into TGroups and retrieve the group_id
-    let insertQuery = `INSERT INTO TGroups (group_name) VALUES ('${title}'); SELECT SCOPE_IDENTITY() AS id;`;
-    let result = await app.locals.db.query(insertQuery);
+    // let insertQuery = `INSERT INTO TGroups (group_name) VALUES ('${title}'); SELECT SCOPE_IDENTITY() AS id;`;
+    // let result = await app.locals.db.query(insertQuery);
     
-    if (result.recordset && result.recordset.length > 0) {
-        let groupId = result.recordset[0].id;
+    // if (result.recordset && result.recordset.length > 0) {
+    //     let groupId = result.recordset[0].id;
         
-        // Insert into TGroupsMembers for each username
-        for (let e of usernames) {
-            let userQuery = `SELECT id FROM UAuthentication WHERE username = '${e}'`;
-            let userResult = await app.locals.db.query(userQuery);
+    //     // Insert into TGroupsMembers for each username
+    //     for (let e of usernames) {
+    //         let userQuery = `SELECT id FROM UAuthentication WHERE username = '${e}'`;
+    //         let userResult = await app.locals.db.query(userQuery);
             
-            if (userResult.recordset && userResult.recordset.length > 0) {
-            let userId = userResult.recordset[0].id;
-            
-            let groupMemberQuery = `INSERT INTO TGroupsMembers (group_id, user_id) VALUES (${groupId}, ${userId})`;
-            await app.locals.db.query(groupMemberQuery);
-            }
-        }
+    //         if (userResult.recordset && userResult.recordset.length > 0) {
+    //             let userId = userResult.recordset[0].id;
+                
+    //             let groupMemberQuery = `INSERT INTO TGroupsMembers (group_id, user_id) VALUES (${groupId}, ${userId})`;
+    //             await app.locals.db.query(groupMemberQuery);
+    //         }
+    //     }
     
-        res.send({ status: "ok" });
-    } else {
-        res.send({ status: "error", message: "Failed to create group." });
-    }
+    //     res.send({ status: "ok" });
+    // } else {
+    //     res.send({ status: "error", message: "Failed to create group." });
+    // }
   });
   
   
 
 app.post('/post_delete_chat', async (req,res)=>{
     let {username,utoken,group_id} = req.body;
-    let query1 = await app.locals.db.query(`delete from TGroups where group_id=${group_id};`);
-    res.send({status:"ok"})
+    console.log(group_id)
+    try {
+        let query1 = await app.locals.db.query(`delete from TGroups where id=${group_id};`);
+        res.send({status:"ok"})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 })
 
 app.post('/post_filter_chats_sql', async (req, res) => {

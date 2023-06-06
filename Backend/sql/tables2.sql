@@ -88,7 +88,7 @@ CREATE TABLE [Payment]
 
 CREATE TABLE [Users]
 (
- [id]        int IDENTITY (0, 1) NOT NULL ,
+ [id]        int IDENTITY (1, 1) NOT NULL ,
  [name]      varchar(50) NULL ,
  [phone]     varchar(20) NULL ,
  [email]     varchar(50) NOT NULL ,
@@ -162,7 +162,7 @@ CREATE NONCLUSTERED INDEX [FK_3] ON [Orders]
 CREATE TABLE [TGroups]
 (
  [id]   int IDENTITY (1, 1) NOT NULL ,
- [name] varchar(50) NULL ,
+ [gname] varchar(50) NULL ,
 
 
  CONSTRAINT [PK_9] PRIMARY KEY CLUSTERED ([id] ASC)
@@ -177,7 +177,7 @@ CREATE TABLE [TGroupMembers]
 
  CONSTRAINT [PK_10] PRIMARY KEY CLUSTERED ([user_id] ASC, [group_id] ASC),
  CONSTRAINT [FK_2] FOREIGN KEY ([user_id])  REFERENCES [Users]([id]),
- CONSTRAINT [FK_3] FOREIGN KEY ([group_id])  REFERENCES [TGroups]([id])
+ CONSTRAINT [FK_3] FOREIGN KEY ([group_id])  REFERENCES [TGroups]([id]) ON DELETE CASCADE
 );
 
 
@@ -200,14 +200,14 @@ CREATE TABLE [Messages]
 (
  [id]        int IDENTITY (0, 1) NOT NULL ,
  [msg]       varchar(256) NOT NULL ,
- [sent_date] datetime NOT NULL ,
+ [sent_date] datetime DEFAULT GETDATE(),
  [user_id]   int NOT NULL ,
  [group_id]  int NOT NULL ,
 
 
  CONSTRAINT [PK_11] PRIMARY KEY CLUSTERED ([id] ASC),
  CONSTRAINT [FK_4] FOREIGN KEY ([user_id])  REFERENCES [Users]([id]),
- CONSTRAINT [FK_5] FOREIGN KEY ([group_id])  REFERENCES [TGroups]([id])
+ CONSTRAINT [FK_5] FOREIGN KEY ([group_id])  REFERENCES [TGroups]([id]) ON DELETE CASCADE
 );
 
 
