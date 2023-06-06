@@ -140,7 +140,7 @@ CREATE TABLE [Orders]
 
 CREATE NONCLUSTERED INDEX [FK_1] ON [Orders] 
  (
-  [user] ASC
+  [user_id] ASC
  )
 
 
