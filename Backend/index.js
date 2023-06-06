@@ -107,7 +107,7 @@ app.post('/post_profile', async (req, res) => {
     let query = await app.locals.db.query(`SELECT username, name, phone, email, postalZip, region, country FROM Profile WHERE username='${username}' AND utoken='${utoken}'`);
     console.log(query);
     res.send(query.recordset[0]);
-});
+  });
   
 app.post('/post_profile_edit', async (req, res) => {
     let { username, utoken, name, phone, email, postalZip, region, country } = req.body;
