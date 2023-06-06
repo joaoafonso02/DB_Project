@@ -314,7 +314,7 @@ app.post('/post_usernames', async (req, res) => {
 // Start Express and then Start SQL
 let port = 5004;
 app.listen(port, async () => {
-    app.locals.db = await sql.connect(config);
+    app.locals.db = await sql.connect(configLocal);
     (await import('./createTables.js')).default(app.locals.db);
     console.log(`Server is running on port ${port}`);
 });
